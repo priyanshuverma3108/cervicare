@@ -740,6 +740,46 @@
       box-shadow: 0 4px 12px rgba(255, 23, 68, 0.3);
     }
 
+    /* Profile avatar + dropdown in navbar */
+    .profile-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      right: 25;
+      top: 46px;
+      min-width: 180px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      display: none;
+      z-index: 10001;
+    }
+
+    .profile-dropdown.active { display: block; }
+
+    .profile-dropdown-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .profile-dropdown-item:hover { background: #f5f5f5; }
+
     /* ==================== REMINDERS STYLES ==================== */
     .reminder-section {
       background: white;
@@ -848,14 +888,8 @@
     }
 
     section h2::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 60px;
-      height: 3px;
-      background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-      border-radius: 2px;
+      /* decorative underline removed per request */
+      display: none;
     }
 
     .btn {
@@ -944,6 +978,15 @@
         <li><a href="#findcare">Find Care</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
+      <!-- Hamburger for small screens -->
+      <div class="hamburger-section">
+      <button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      </div>
+
       <div class="rightNav">
         <input type="text" name="search" id="search" placeholder="Search...">
         <button class="btn btn-sm">Search</button>
@@ -951,8 +994,82 @@
           <button class="login-btn-nav" id="loginBtnNav">Login</button>
         </div>
       </div>
+      <!-- Mobile menu (hidden on desktop) -->
+      <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+        <nav class="mobile-nav">
+          <div class="menu-header" role="banner">
+            <div class="menu-logo">
+              <img src="img/bg.jpg" alt="CerviCare logo">
+            </div>
+            <button id="mobileMenuClose" class="mobile-menu-close" aria-label="Close menu">×</button>
+          </div>
+          <ul class="mobile-nav-list" role="menu">
+            <li class="accordion" role="none">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1"/><rect x="13" y="3" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.85"/><rect x="3" y="13" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.85"/><rect x="13" y="13" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.6"/></svg></span>
+                <span class="acc-label">Category</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden role="menu">
+                <li><a href="#cat1">Subcategory 1</a></li>
+                <li><a href="#cat2">Subcategory 2</a></li>
+                <li><a href="#cat3">Subcategory 3</a></li>
+              </ul>
+            </li>
+            <li class="accordion">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7a4 4 0 100-8 4 4 0 000 8z" transform="translate(0,7)" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span>
+                <span class="acc-label">My Government</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden>
+                <li><a href="#gov1">Portal 1</a></li>
+                <li><a href="#gov2">Portal 2</a></li>
+              </ul>
+            </li>
+            <li class="accordion">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 6h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><path d="M4 12h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.85"/><path d="M4 18h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/></svg></span>
+                <span class="acc-label">Directory</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden>
+                <li><a href="#dir1">Listings</a></li>
+                <li><a href="#dir2">Partners</a></li>
+              </ul>
+            </li>
+            <li class="accordion">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 10c0-5.523-9-7-9-7s-9 1.477-9 7a9 9 0 0018 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 11a1 1 0 110-2 1 1 0 010 2z" stroke="currentColor" stroke-width="1.5"/></svg></span>
+                <span class="acc-label">Explore India</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden>
+                <li><a href="#exp1">Regions</a></li>
+                <li><a href="#exp2">Destinations</a></li>
+              </ul>
+            </li>
+            <li role="none"><a role="menuitem" href="#about"><span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M11 12h2v5h-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>About Us</a></li>
+            <li role="none"><a role="menuitem" href="#contact"><span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a3 3 0 01-3 3h-1a11 11 0 01-11-11v-1a3 3 0 013-3h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21l-5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Contact</a></li>
+          </ul>
+          <div class="menu-section">
+            <h4 class="menu-section-title">Utility</h4>
+            <div class="menu-section-list">
+              <a href="#contact">Contact Us</a>
+              <a href="#feedback">Feedback</a>
+              <a href="#faqs">FAQs</a>
+            </div>
+          </div>
+          <div class="mobile-auth" id="mobile-auth-container">
+            <button class="login-btn-nav" id="mobileLoginBtn">Login</button>
+          </div>
+        </nav>
+      </div>
+      <div id="mobileBackdrop" class="mobile-backdrop" hidden></div>
     </nav>
   </header>
+
+
 
   <!-- Hero Section -->
   <section id="home" class="background firstsection" data-aos="fade-right" data-aos-delay="120" data-aos-duration="800">
@@ -1108,67 +1225,51 @@
 
 <!-- Contact Section -->
 <section id="contact" class="about-section" data-aos="fade-up" data-aos-delay="120" data-aos-duration="800">
-  <div class="container" style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
-    <div style="flex:1;min-width:300px;max-width:700px;">
+  <div class="container contact-wrapper">
+    <div class="contact-form">
       <h2>Contact Us</h2>
       <p>Send us a message and our team will get back to you as soon as possible.</p>
 
-      <form action="https://formspree.io/f/xgvgpzgz" method="POST">
-  <label>
-    Your email:
-    <input type="email" name="email">
-  </label>
-  <label>
-    Your message:
-    <textarea name="message"></textarea>
-  </label>
-  <!-- your other form fields go here -->
-  <button type="submit">Send</button>
-</form>
+      <form id="contactForm" action="https://formspree.io/f/xgvgpzgz" method="POST" aria-label="Contact form" style="margin-top:16px;">
+        <div class="form-row">
+          <label class="form-field">
+            <div style="font-weight:600;margin-bottom:6px;">Name</div>
+            <input id="contactName" type="text" required placeholder="Your name" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+          </label>
+          <label class="form-field">
+            <div style="font-weight:600;margin-bottom:6px;">Email</div>
+            <input id="contactEmail" type="email" required placeholder="you@example.com" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+          </label>
+        </div>
+
+        <label class="form-field">
+          <div style="font-weight:600;margin-bottom:6px;">Subject</div>
+          <input id="contactSubject" type="text" placeholder="Subject" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+        </label>
+
+        <label class="form-field">
+          <div style="font-weight:600;margin-bottom:6px;">Message</div>
+          <textarea id="contactMessage" rows="6" required placeholder="Write your message..." style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Send Message</button>
+          <button type="button" id="contactReset" class="btn" style="background:#888;">Reset</button>
+          <div id="contactFormStatus" aria-live="polite" style="margin-left:12px;font-weight:600;"></div>
+        </div>
+      </form>
 
       <div style="margin-top:18px;color:#555;font-size:14px;">
-        <p><strong>Response time:</strong> We aim to reply within 48 hours. For urgent matters call our helpline below.</p>
+        
       </div>
     </div>
 
-    <aside style="width:360px;min-width:260px;">
-      <div style="background:white;padding:18px;border-radius:12px;box-shadow:var(--box-shadow-light);margin-bottom:16px;">
-        <h3 style="margin-top:0;color:var(--primary-color);">Office</h3>
-        <p style="margin:0 0 8px;">CerviCare HQ</p>
-        <p style="margin:0 0 8px;font-size:14px;color:#555;">123 Health Street, Wellness City, State</p>
-        <p style="margin:0;"><strong>Phone:</strong> <a href="tel:+911234567890">+91 12345 67890</a></p>
-        <p style="margin:6px 0 0;"><strong>Email:</strong> <a href="mailto:support@cervicare.example">support@cervicare.example</a></p>
-        <p style="margin-top:8px;font-size:13px;color:#666;"><strong>Hours:</strong> Mon–Fri 09:00–18:00</p>
-        <div style="margin-top:10px;">
-          <a class="btn" href="https://www.google.com/maps/search/CerviCare+HQ" target="_blank" rel="noopener">Open in Maps</a>
-        </div>
-      </div>
-
-      <div style="background:linear-gradient(135deg,#fff7fb,#fff);padding:16px;border-radius:12px;box-shadow:var(--box-shadow-light);margin-bottom:16px;">
-        <h4 style="margin:0 0 8px;color:var(--primary-color);">Emergency / Helplines</h4>
-        <ul style="padding-left:18px;margin:0;color:#444;font-size:14px;line-height:1.6;">
-          <li><strong>Medical Helpline:</strong> <a href="tel:+911122223333">+91 11 222 3333</a></li>
-          <li><strong>Women's Health Helpline:</strong> <a href="tel:+911198765432">+91 11 98765 432</a></li>
-          <li><strong>Cancer Support Line:</strong> <a href="tel:+911800111222">1800-111-222</a></li>
-        </ul>
-      </div>
-
-      <div style="background:white;padding:12px;border-radius:12px;box-shadow:var(--box-shadow-light);">
-        <h4 style="margin:0 0 8px;color:var(--primary-color);">Follow Us</h4>
-        <div style="display:flex;gap:8px;">
-          <a href="https://twitter.com/" target="_blank" rel="noopener" style="display:inline-block;padding:8px 10px;border-radius:8px;background:#1DA1F2;color:white;text-decoration:none;">Twitter</a>
-          <a href="https://www.instagram.com/" target="_blank" rel="noopener" style="display:inline-block;padding:8px 10px;border-radius:8px;background:#E4405F;color:white;text-decoration:none;">Instagram</a>
-          <a href="https://www.linkedin.com/" target="_blank" rel="noopener" style="display:inline-block;padding:8px 10px;border-radius:8px;background:#0A66C2;color:white;text-decoration:none;">LinkedIn</a>
-        </div>
-
-        <div style="margin-top:12px;">
-          <h5 style="margin:0 0 8px;">Quick Map</h5>
-          <iframe title="CerviCare map" src="https://www.google.com/maps?q=CerviCare+HQ&output=embed" width="100%" height="140" style="border:0;border-radius:8px;"></iframe>
-        </div>
-      </div>
-    </aside>
+    <!-- aside removed as requested -->
   </div>
 </section>
+
+<!-- Profile is now managed by backend. Frontend will fetch profile on demand -->
+<!-- Removed static #profile section per backend migration request -->
 
 
   <!-- ---------------- CHATBOT UI (FLOATING) ---------------- -->
@@ -1235,9 +1336,117 @@
   </div>
 
   <!-- FOOTER -->
-  <footer>
-    <p>© 2025 CerviCare | Empowering Women Through Awareness</p>
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <div class="footer-col footer-about">
+        <a class="footer-logo" href="#home">
+          <img src="img/bg.jpg" alt="CerviCare" />
+        </a>
+        <p>Empowering women with trusted cervical health information, screening reminders, and compassionate care guidance.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2.2v-2.9h2.2V9.3c0-2.2 1.3-3.4 3.2-3.4.9 0 1.9.16 1.9.16v2.1h-1.1c-1.1 0-1.5.74-1.5 1.5v1.8h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="social-link"> 
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.2 4.2 0 0 0 1.84-2.32 8.36 8.36 0 0 1-2.66 1.02 4.18 4.18 0 0 0-7.12 3.81A11.86 11.86 0 0 1 3.16 4.6a4.18 4.18 0 0 0 1.29 5.58c-.66-.02-1.28-.2-1.82-.5v.05a4.18 4.18 0 0 0 3.36 4.1c-.33.09-.68.14-1.04.14-.25 0-.5-.02-.74-.07a4.19 4.19 0 0 0 3.9 2.9A8.39 8.39 0 0 1 2 19.54 11.83 11.83 0 0 0 8.29 21c7.55 0 11.68-6.25 11.68-11.66v-.53A8.18 8.18 0 0 0 22.46 6z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm6.5-2.6a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#findcare">Find Care</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <address>
+          CerviCare Clinic<br>
+          123 Health an<br>
+          <a href="tel:+911234567890">+91 12345 67890</a><br>
+          <a href="mailto:cervicare0@gmail.com">cervicare0@gmail.com</a>
+        </address>
+      </div>
+
+      <div class="footer-col footer-newsletter">
+        <h4>Stay Informed</h4>
+        <p>Get screening reminders and health tips — delivered to your inbox.</p>
+        <form id="footerNewsletter" class="newsletter-form">
+          <input type="email" id="newsletterEmail" placeholder="Your email" required />
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <div id="newsletterMessage" class="small muted"></div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="bottom-center">© 2025 CerviCare — All rights reserved</div>
+        <div class="bottom-right">
+          <a href="#" id="backToTop" class="back-to-top">Back to top ↑</a>
+        </div>
+      </div>  
+    </div>
   </footer>
+
+  <!-- sticky bottom bar removed -->
+
+  <style>
+  /* Footer styles */
+  .site-footer{background:linear-gradient(180deg,#f8fafc,#ffffff);color:var(--text,#222);padding-top:44px;padding-bottom:12px;border-top:1px solid rgba(0,0,0,.05)}
+  .site-footer .footer-inner{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.1fr;gap:20px;padding:28px 0}
+  .site-footer .footer-col h4{margin:0 0 8px;font-size:15px}
+  .site-footer .footer-about p{max-width:360px;color:#444}
+  .footer-logo img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+  .footer-social{margin-top:10px;display:flex;gap:8px}
+  .social-link{color:var(--accent,#4a90e2);opacity:.9}
+  .footer-links ul{list-style:none;padding:0;margin:0}
+  .footer-links li{margin:8px 0}
+  .footer-links a{color:inherit;text-decoration:none}
+  .footer-contact address{font-style:normal;color:#444}
+  .newsletter-form{display:flex;gap:8px;margin-top:8px}
+  .newsletter-form input{flex:1;padding:8px;border-radius:8px;border:1px solid #e3e6ee}
+  .newsletter-form button{padding:8px 12px}
+  .small.muted{font-size:13px;color:#666;margin-top:8px}
+
+  .footer-bottom{border-top:1px solid rgba(0,0,0,.04);padding:12px 0;margin-top:18px}
+  .footer-bottom .container{display:flex;justify-content:center;align-items:center;gap:12px}
+  .back-to-top{color:var(--accent,#4a90e2);text-decoration:none}
+
+  .sb-link{color:var(--accent,#4a90e2);text-decoration:none}
+  .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,.06)}
+
+  @media (max-width:900px){
+    .site-footer .footer-inner{grid-template-columns:1fr;gap:18px}
+    .footer-bottom .container{flex-direction:column;gap:8px}
+    /* sticky bottom bar removed; responsive footer adjustments kept */
+  }
+  </style>
+
+  <script>
+    // Footer interactions: newsletter and back-to-top
+    document.getElementById('footerNewsletter')?.addEventListener('submit', function(e){
+      e.preventDefault();
+      const em = document.getElementById('newsletterEmail').value.trim();
+      const msg = document.getElementById('newsletterMessage');
+      if (!em) { if (msg) msg.textContent = 'Please enter your email.'; return; }
+      // naive local save for demo
+      try { const arr=JSON.parse(localStorage.getItem('cervicareNewsletter')||'[]'); arr.push({email:em,at:new Date().toISOString()}); localStorage.setItem('cervicareNewsletter', JSON.stringify(arr)); if (msg) msg.textContent='Subscribed — thank you!'; this.reset(); }
+      catch(err){ if (msg) msg.textContent='Subscription failed.' }
+    });
+
+    document.getElementById('backToTop')?.addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+    // Sticky bar removed — no bottom actions
+  </script>
 
 
   <!-- ------------------- JAVASCRIPT SECTION ------------------ -->
@@ -1717,6 +1926,150 @@
     initializeAuth();
   });
 
+  // API fetch wrapper with fallback to localhost:3001 when primary API is unavailable
+  const API_FALLBACK_ORIGINS = [`${location.protocol}//localhost:3001`, `${location.protocol}//localhost:3002`];
+  // Internal helper: fetch with timeout using AbortController
+  async function fetchWithTimeout(resource, options = {}, timeoutMs = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(resource, { ...options, signal });
+      clearTimeout(timer);
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  }
+
+  async function apiFetch(path, opts = {}, timeoutMs = 5000) {
+    // Try same-origin first with timeout
+    try {
+      const primary = path;
+      const res = await fetchWithTimeout(primary, opts, timeoutMs);
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      if (ct.includes('text/html')) throw new Error('Received HTML from API — likely the editor static server');
+      return res;
+    } catch (err) {
+      // Fallback to explicit dev ports (try origins in the list)
+      let lastErr;
+      for (const origin of API_FALLBACK_ORIGINS) {
+        try {
+          const u = origin + (path.startsWith('/') ? path : '/' + path);
+          const res2 = await fetchWithTimeout(u, opts, timeoutMs);
+          try { showApiFallbackNotice(origin); } catch (e) { /* ignore */ }
+          return res2;
+        } catch (e) { lastErr = e; }
+      }
+      throw new Error('API request failed (primary and fallback): ' + (lastErr?.message || err.message || 'unknown'));
+    }
+  }
+
+  // Show a small non-intrusive notice when we had to fallback to local dev API
+  function showApiFallbackNotice(origin) {
+    let el = document.getElementById('apiFallbackNotice');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'apiFallbackNotice';
+      el.setAttribute('role', 'status');
+      el.style.cssText = 'position:fixed;bottom:22px;left:22px;background:linear-gradient(90deg,#ffefef,#fff1f6);color:#880e4f;padding:10px 14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.12);font-weight:600;z-index:10002;opacity:0;transform:translateY(8px);transition:all 260ms ease';
+      el.textContent = 'Using local dev API (' + (origin || 'http://localhost:3001') + ')';
+      document.body.appendChild(el);
+    }
+    // animate in
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+    // hide after 5s
+    clearTimeout(window.__apiFallbackNoticeTimeout);
+    window.__apiFallbackNoticeTimeout = setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+    }, 5000);
+  }
+
+  // Profile now served by backend. Fetch profile on demand and show modal.
+  async function fetchProfileAndShowModal() {
+    const token = localStorage.getItem('cervicareToken');
+    if (!token) {
+      alert('You must be logged in to view your profile.');
+      return;
+    }
+    try {
+      const res = await apiFetch('/api/profile', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || 'Failed to fetch profile');
+      }
+      const profile = await res.json();
+
+      // Build modal
+      let modal = document.getElementById('backendProfileModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'backendProfileModal';
+        modal.className = 'backend-profile-modal';
+        document.body.appendChild(modal);
+      }
+      modal.innerHTML = `
+        <div class="modal-backdrop" id="bp-backdrop"></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Profile">
+          <button id="bp-close" class="modal-close">×</button>
+          <h3>My Profile</h3>
+          <div><strong>Name:</strong> ${profile.name || profile.email || '—'}</div>
+          <div><strong>Email:</strong> ${profile.email || '—'}</div>
+          <div style="margin-top:8px;"><strong>Joined:</strong> ${profile.joinedAt ? new Date(profile.joinedAt).toLocaleString() : '—'}</div>
+          <div style="margin-top:12px;">
+            <button id="bp-edit" class="btn">Edit Profile</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('bp-close').onclick = () => modal.remove();
+      document.getElementById('bp-backdrop').onclick = () => modal.remove();
+      const editBtn = document.getElementById('bp-edit');
+      if (editBtn) editBtn.onclick = function() {
+        // Replace modal contents with an edit form
+        const formHtml = `
+          <div class="modal-backdrop" id="bp-backdrop"></div>
+          <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Edit Profile">
+            <button id="bp-close" class="modal-close">×</button>
+            <h3>Edit Profile</h3>
+            <label style="display:block;margin-top:8px;">Name<br/><input id="bp-name" value="${(profile.name||'').replace(/"/g,'&quot;')}" /></label>
+            <div style="margin-top:12px;"><button id="bp-save" class="btn">Save</button> <button id="bp-cancel" class="btn btn-secondary">Cancel</button></div>
+          </div>
+        `;
+        modal.innerHTML = formHtml;
+        document.getElementById('bp-close').onclick = () => modal.remove();
+        document.getElementById('bp-backdrop').onclick = () => modal.remove();
+        document.getElementById('bp-cancel').onclick = () => fetchProfileAndShowModal();
+        document.getElementById('bp-save').onclick = async function() {
+          const nameVal = document.getElementById('bp-name').value.trim();
+          try {
+            const token = localStorage.getItem('cervicareToken');
+            const r = await apiFetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: JSON.stringify({ name: nameVal }) });
+            if (!r.ok) { const t=await r.text(); throw new Error(t||'Save failed'); }
+            const updated = await r.json();
+            // show updated profile view
+            profile.name = updated.name;
+            fetchProfileAndShowModal();
+          } catch (err) {
+            alert('Unable to save profile: ' + (err.message || err));
+            console.error(err);
+          }
+        };
+      };
+
+    } catch (err) {
+      console.error(err);
+      alert('Unable to load profile: ' + (err.message || err));
+    }
+  }
+
   function initializeAuth() {
     const authModal = document.getElementById("authModal");
     const loginBtnNav = document.getElementById("loginBtnNav");
@@ -1840,132 +2193,135 @@
       return emailRegex.test(email);
     }
 
-    function handleSignup() {
+    async function handleSignup() {
       const email = document.getElementById("signupEmail").value.trim();
       const password = document.getElementById("signupPassword").value;
       const confirmPassword = document.getElementById("confirmPassword").value;
-      const signupMessage = document.getElementById("signupMessage");
 
       // Validation
-      if (!email || !password || !confirmPassword) {
-        showMessage("signupMessage", "Please fill in all fields.", "error");
-        return;
+      if (!email || !password || !confirmPassword) { showMessage("signupMessage", "Please fill in all fields.", "error"); return; }
+      if (!validateEmail(email)) { showMessage("signupMessage", "Please enter a valid email address.", "error"); return; }
+      if (password.length < 6) { showMessage("signupMessage", "Password must be at least 6 characters long.", "error"); return; }
+      if (password !== confirmPassword) { showMessage("signupMessage", "Passwords do not match.", "error"); return; }
+
+      try {
+        const res = await apiFetch('/api/auth/signup', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Signup failed');
+        }
+        showMessage("signupMessage", "Account created successfully! You can now login.", "success");
+        setTimeout(() => { switchTab('login'); document.getElementById("loginEmail").value = email; }, 1200);
+      } catch (err) {
+        // Fallback: save user locally so signup/login can be tested without backend
+        console.warn('Signup API failed, falling back to localStorage', err);
+        try {
+          const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
+          if (users.find(u => u.email === email)) {
+            showMessage("signupMessage", "An account with this email already exists (local).", "error");
+            return;
+          }
+          users.push({ email: email, password: password, createdAt: new Date().toISOString() });
+          localStorage.setItem('cervicareUsers', JSON.stringify(users));
+          showMessage("signupMessage", "Signed up locally (offline). You can now login.", "success");
+          setTimeout(() => { switchTab('login'); document.getElementById("loginEmail").value = email; }, 900);
+        } catch (le) {
+          console.error('Local signup failed', le);
+          showMessage("signupMessage", "Signup error: " + (err.message || err), "error");
+        }
       }
-
-      if (!validateEmail(email)) {
-        showMessage("signupMessage", "Please enter a valid email address.", "error");
-        return;
-      }
-
-      if (password.length < 6) {
-        showMessage("signupMessage", "Password must be at least 6 characters long.", "error");
-        return;
-      }
-
-      if (password !== confirmPassword) {
-        showMessage("signupMessage", "Passwords do not match.", "error");
-        return;
-      }
-
-      // Check if user already exists
-      const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
-      const existingUser = users.find(user => user.email === email);
-
-      if (existingUser) {
-        showMessage("signupMessage", "An account with this email already exists. Please login instead.", "error");
-        return;
-      }
-
-      // Create new user
-      const newUser = {
-        email: email,
-        password: password, // In production, this should be hashed
-        createdAt: new Date().toISOString()
-      };
-
-      users.push(newUser);
-      localStorage.setItem('cervicareUsers', JSON.stringify(users));
-
-      showMessage("signupMessage", "Account created successfully! You can now login.", "success");
-      
-      // Switch to login tab after 2 seconds
-      setTimeout(() => {
-        switchTab('login');
-        document.getElementById("loginEmail").value = email;
-      }, 2000);
     }
 
-    function handleLogin() {
+    async function handleLogin() {
       const email = document.getElementById("loginEmail").value.trim();
       const password = document.getElementById("loginPassword").value;
-      const loginMessage = document.getElementById("loginMessage");
 
-      // Validation
-      if (!email || !password) {
-        showMessage("loginMessage", "Please enter both email and password.", "error");
-        return;
+      if (!email || !password) { showMessage("loginMessage", "Please enter both email and password.", "error"); return; }
+      if (!validateEmail(email)) { showMessage("loginMessage", "Please enter a valid email address.", "error"); return; }
+
+      try {
+        const res = await apiFetch('/api/auth/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Login failed');
+        }
+        const data = await res.json();
+        // Expecting { token, user }
+        if (data.token) {
+          localStorage.setItem('cervicareToken', data.token);
+          if (data.user && data.user.email) localStorage.setItem('cervicareEmail', data.user.email);
+        }
+        showMessage("loginMessage", "Login successful!", "success");
+        setTimeout(() => { closeAuthModalFunc(); checkLoginStatus(); }, 800);
+      } catch (err) {
+        // Fallback: try localStorage users if backend isn't reachable
+        console.warn('Login API failed, attempting local fallback', err);
+        try {
+          const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
+          const user = users.find(u => u.email === email && u.password === password);
+          if (!user) {
+            showMessage("loginMessage", "Invalid email or password (offline).", "error");
+            return;
+          }
+          // create a local token so checkLoginStatus can treat user as logged in
+          const localToken = 'local-' + Date.now();
+          localStorage.setItem('cervicareToken', localToken);
+          localStorage.setItem('cervicareEmail', email);
+          showMessage("loginMessage", "Login successful (offline).", "success");
+          setTimeout(() => { closeAuthModalFunc(); checkLoginStatus(); }, 600);
+        } catch (le) {
+          console.error('Local login failed', le);
+          showMessage("loginMessage", "Login error: " + (err.message || err), "error");
+        }
       }
-
-      if (!validateEmail(email)) {
-        showMessage("loginMessage", "Please enter a valid email address.", "error");
-        return;
-      }
-
-      // Check user credentials
-      const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
-      const user = users.find(u => u.email === email && u.password === password);
-
-      if (!user) {
-        showMessage("loginMessage", "Invalid email or password. Please try again.", "error");
-        return;
-      }
-
-      // Login successful
-      const userSession = {
-        email: email,
-        loggedInAt: new Date().toISOString()
-      };
-      localStorage.setItem('cervicareCurrentUser', JSON.stringify(userSession));
-
-      showMessage("loginMessage", "Login successful! Welcome back.", "success");
-      
-      // Close modal and update UI after 1 second
-      setTimeout(() => {
-        closeAuthModalFunc();
-        checkLoginStatus();
-      }, 1000);
     }
 
     function checkLoginStatus() {
-      const currentUser = JSON.parse(localStorage.getItem('cervicareCurrentUser') || 'null');
-      
-      if (currentUser && authNavContainer) {
-        // User is logged in
+      const token = localStorage.getItem('cervicareToken');
+      const email = localStorage.getItem('cervicareEmail');
+
+      if (token && authNavContainer) {
+        const initials = (email && email.charAt(0).toUpperCase()) || 'U';
         authNavContainer.innerHTML = `
-          <div class="user-info-nav">
-            <span>👤 ${currentUser.email}</span>
-            <button class="logout-btn" id="logoutBtn">Logout</button>
+          <div class="user-info-nav" style="position:relative;">
+            <div id="profileAvatar" class="profile-avatar" title="${email}">${initials}</div>
+            <div id="profileDropdown" class="profile-dropdown" aria-hidden="true">
+              <div class="profile-dropdown-item" id="viewProfileBtn">View Profile</div>
+              <div class="profile-dropdown-item" id="logoutBtn">Logout</div>
+            </div>
           </div>
         `;
 
-        // Add logout functionality
-        const logoutBtn = document.getElementById("logoutBtn");
-        if (logoutBtn) {
-          logoutBtn.onclick = function() {
-            localStorage.removeItem('cervicareCurrentUser');
-            checkLoginStatus();
-          };
+        const avatarEl = document.getElementById('profileAvatar');
+        const dropdownEl = document.getElementById('profileDropdown');
+        const viewProfileBtn = document.getElementById('viewProfileBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (avatarEl && dropdownEl) avatarEl.onclick = function(e) { e.stopPropagation(); dropdownEl.classList.toggle('active'); };
+
+        if (viewProfileBtn) viewProfileBtn.onclick = function() { if (dropdownEl) dropdownEl.classList.remove('active'); fetchProfileAndShowModal(); };
+
+        if (logoutBtn) logoutBtn.onclick = function() { localStorage.removeItem('cervicareToken'); localStorage.removeItem('cervicareEmail'); checkLoginStatus(); };
+
+        if (!window.__profileDropdownListenerAdded) {
+          document.addEventListener('click', function(ev) {
+            const d = document.getElementById('profileDropdown');
+            const a = document.getElementById('profileAvatar');
+            if (d && a && !d.contains(ev.target) && !a.contains(ev.target)) d.classList.remove('active');
+          });
+          window.__profileDropdownListenerAdded = true;
         }
       } else {
-        // User is not logged in
         if (authNavContainer) {
           authNavContainer.innerHTML = '<button class="login-btn-nav" id="loginBtnNav">Login</button>';
           const newLoginBtn = document.getElementById("loginBtnNav");
-          if (newLoginBtn) {
-            newLoginBtn.onclick = function() {
-              openAuthModal();
-            };
-          }
+          if (newLoginBtn) newLoginBtn.onclick = function() { openAuthModal(); };
         }
       }
     }
@@ -2359,8 +2715,160 @@
 
   console.log('%c✨ Advanced CSS & JS Enhancements Loaded!', 'color: #c2185b; font-size: 16px; font-weight: bold;');
 </script>
+  <!-- Contact form handling (client-side save to localStorage) -->
+  <script>
+    (function() {
+      const form = document.getElementById('contactForm');
+      const statusEl = document.getElementById('contactFormStatus');
+      const resetBtn = document.getElementById('contactReset');
+
+      function showFormStatus(message, type='info') {
+        if (window.showNotification) {
+          window.showNotification(message, type === 'success' ? 'success' : type === 'error' ? 'error' : 'info');
+        }
+        if (statusEl) {
+          statusEl.textContent = message;
+          statusEl.style.color = type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#333';
+          setTimeout(() => { statusEl.textContent = ''; }, 3500);
+        }
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const name = document.getElementById('contactName').value.trim();
+          const email = document.getElementById('contactEmail').value.trim();
+          const subject = document.getElementById('contactSubject').value.trim();
+          const message = document.getElementById('contactMessage').value.trim();
+
+          if (!name || !email || !message) {
+            showFormStatus('Please complete name, email and message.', 'error');
+            return;
+          }
+          if (!validateEmail(email)) {
+            showFormStatus('Please enter a valid email address.', 'error');
+            return;
+          }
+
+          // Save locally
+          try {
+            const saved = JSON.parse(localStorage.getItem('cervicareContacts') || '[]');
+            const entry = { id: 'msg_' + Date.now(), name, email, subject, message, createdAt: new Date().toISOString() };
+            saved.push(entry);
+            localStorage.setItem('cervicareContacts', JSON.stringify(saved));
+          } catch (err) {
+            console.warn('Could not save contact locally', err);
+          }
+
+          // Submit to Formspree via fetch (uses form action attribute)
+          const action = form.getAttribute('action') || 'https://formspree.io/f/xgvgpzgz';
+          const fd = new FormData();
+          fd.append('name', name);
+          fd.append('_replyto', email);
+          fd.append('subject', subject);
+          fd.append('message', message);
+
+          fetch(action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: fd
+          }).then(response => {
+            if (response.ok) {
+              showFormStatus('Message sent. Thank you — we will reply soon.', 'success');
+              form.reset();
+            } else {
+              response.json().then(data => {
+                showFormStatus((data && data.error) ? data.error : 'Submission failed. Please try again later.', 'error');
+              }).catch(() => {
+                showFormStatus('Submission failed. Please try again later.', 'error');
+              });
+            }
+          }).catch(() => {
+            showFormStatus('Network error sending message. Please try again later.', 'error');
+          });
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function() { if (form) form.reset(); });
+      }
+
+      // Developer helper to read saved messages
+      window.getCerviCareMessages = function() {
+        return JSON.parse(localStorage.getItem('cervicareContacts') || '[]');
+      };
+    })();
+  </script>
   <!-- AOS (Animate On Scroll) - JS -->
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Hamburger/mobile menu behavior
+    (function(){
+      const btn = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('mobileMenu');
+      const backdrop = document.getElementById('mobileBackdrop');
+      const mobileAuth = document.getElementById('mobile-auth-container');
+      const closeBtn = document.getElementById('mobileMenuClose');
+      const authNav = document.getElementById('auth-nav-container');
+
+      function syncAuth() {
+        if (!mobileAuth || !authNav) return;
+        mobileAuth.innerHTML = authNav.innerHTML;
+        // wire mobile login button
+        const mLogin = document.getElementById('mobileLoginBtn');
+        const navLogin = document.getElementById('loginBtnNav');
+        if (mLogin && navLogin) mLogin.onclick = navLogin.onclick;
+      }
+
+      function openMenu(){
+        if (!menu || !btn || !backdrop) return;
+        menu.classList.add('active'); menu.setAttribute('aria-hidden','false'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); backdrop.hidden = false; setTimeout(()=>backdrop.classList.add('show'),20);
+        // trap scroll
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      function closeMenu(){
+        if (!menu || !btn || !backdrop) return;
+        menu.classList.remove('active'); menu.setAttribute('aria-hidden','true'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); backdrop.classList.remove('show'); setTimeout(()=>backdrop.hidden=true,300);
+        document.documentElement.style.overflow = '';
+      }
+
+      if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); syncAuth(); const isOpen = btn.classList.contains('open'); if (isOpen) closeMenu(); else openMenu(); });
+      if (backdrop) backdrop.addEventListener('click', closeMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      // close when clicking a link inside mobile menu
+      if (menu) menu.addEventListener('click', function(e){ const a = e.target.closest('a'); if (a) closeMenu(); });
+
+      // Close on escape
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+      // Sync auth into mobile menu on load
+      document.addEventListener('DOMContentLoaded', syncAuth);
+      // Accordion toggle behavior
+      document.addEventListener('DOMContentLoaded', function () {
+        const accordions = document.querySelectorAll('.accordion .accordion-btn');
+        accordions.forEach(btn => {
+          const panel = btn.nextElementSibling;
+          btn.addEventListener('click', function (e) {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            // If you want only one open, close others:
+            accordions.forEach(b => { if (b !== btn) { b.setAttribute('aria-expanded', 'false'); b.nextElementSibling?.classList.remove('open'); b.nextElementSibling?.setAttribute('hidden',''); } });
+            btn.setAttribute('aria-expanded', String(!expanded));
+            if (!expanded) { panel.classList.add('open'); panel.removeAttribute('hidden'); } else { panel.classList.remove('open'); panel.setAttribute('hidden',''); }
+          });
+          // keyboard support
+          btn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+        });
+      });
+      // Also sync whenever auth changes by exposing a hook
+      window.syncCerviCareAuth = syncAuth;
+    })();
+  </script>
   <script>
     // Auto-attach AOS attributes to sections and repeated items
     document.addEventListener('DOMContentLoaded', function () {
