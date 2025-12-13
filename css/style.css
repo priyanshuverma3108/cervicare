@@ -54,6 +54,7 @@
 
 .rightNav {
   text-align: right;
+  padding-right: 76px; /* space for hamburger on the right */
 }
 
 #search {
@@ -63,6 +64,50 @@
   border-radius: 6px;
   outline: none;
 }
+
+/* Hamburger + Mobile Menu styles */
+.hamburger-section{}
+.hamburger{display:flex;background:transparent;border:0;width:46px;height:40px;align-items:center;justify-content:center;cursor:pointer;z-index:1501;position:absolute;right:16px;top:50%;transform:translateY(-50%);}  
+.hamburger span{display:block;height:3px;background:var(--hamburger-color,#fff);margin:5px 0;border-radius:3px;transition:transform .3s ease,opacity .25s ease}
+.hamburger.open span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+.mobile-menu{position:fixed;top:0;right:0;width:360px;max-width:85vw;height:100vh;background:var(--surface,#fff);box-shadow:-8px 0 30px rgba(0,0,0,.12);transform:translateX(110%);transition:transform .36s cubic-bezier(.2,.9,.2,1);z-index:1200;padding:28px 18px;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .menu-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-bottom:8px;border-bottom:1px solid rgba(0,0,0,.06);margin-bottom:12px}
+.mobile-menu .menu-logo img{width:42px;height:42px;border-radius:8px;object-fit:cover}
+.mobile-menu-close{background:transparent;border:0;color:inherit;font-size:26px;cursor:pointer;line-height:1;padding:6px 8px;border-radius:8px}
+.menu-section{margin-top:8px}
+.menu-section-title{font-size:1rem;margin:6px 0;color:var(--dark,#222);font-weight:600}
+.menu-section-list a{display:block;padding:10px 6px;border-radius:6px;color:var(--text,#222);text-decoration:none}
+.mobile-menu.active{transform:translateX(0)}
+.mobile-menu .mobile-nav-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:12px}
+.mobile-menu .mobile-nav-list a{display:flex;align-items:center;gap:10px;padding:10px 6px;border-radius:8px;color:var(--text,#222);text-decoration:none}
+.mobile-menu .mobile-nav-list a .acc-icon{width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;margin-right:6px;flex:0 0 18px}
+.mobile-menu .accordion-btn{display:flex;align-items:center;gap:12px;padding:12px 10px;border-radius:8px;background:transparent;border:0;cursor:pointer;width:100%;text-align:left}
+.mobile-menu .accordion-btn .acc-label{flex:1;font-weight:600}
+.mobile-menu .accordion-btn .acc-caret{transition:transform .2s ease}
+.mobile-menu .accordion-btn[aria-expanded="true"] .acc-caret{transform:rotate(180deg)}
+.mobile-menu .acc-panel{list-style:none;padding:6px 0 0 0;margin:0;display:block;max-height:0;overflow:hidden;transition:max-height .28s cubic-bezier(.2,.9,.2,1);} 
+.mobile-menu .acc-panel.open{max-height:500px;padding-top:10px}
+.mobile-menu .acc-panel a{display:block;padding:8px 10px;border-radius:6px;color:var(--muted,#333);text-decoration:none;font-size:0.95rem}
+.mobile-menu .acc-panel a:hover{background:rgba(0,0,0,0.03)}
+.mobile-menu .mobile-nav-list a::after{content:"›";margin-left:auto;color:rgba(0,0,0,0.45);font-weight:700}
+.mobile-menu .mobile-nav-list a{font-size:1.1rem;padding:12px 8px}
+.mobile-menu .mobile-nav-list a:hover{background:rgba(0,0,0,0.03)}
+.mobile-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.45);z-index:1100;opacity:0;transition:opacity .28s ease}
+.mobile-backdrop.show{opacity:1}
+
+/* Hide desktop nav on small screens */
+@media (max-width:1100px){
+  .nav-list{display:none}
+  .rightNav input, .rightNav button.btn-sm{display:none}
+  .hamburger{display:flex}
+}
+
+/* Accessibility focus styles */
+.mobile-menu a:focus, .mobile-menu button:focus{outline:2px solid var(--accent,#4a90e2);outline-offset:2px}
+
 .button-group{
     display: flex;
     gap: 15px;
@@ -265,13 +310,15 @@
 /* Contact Section */
 #contact {
   background: #f4f6f9;
-  padding: 60px 20px;
+  padding: 20px 100px;
 }
 
 #contact .container {
-  max-width: 1100px;
+  max-width: 1600px;
   margin: auto;
   text-align: center;
+  display: flex;
+  justify-content: center;
 }
 
 #contact h2 {
@@ -288,14 +335,15 @@
 }
 
 .contact-wrapper {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 640px);
+  justify-content: center;
+  align-items: start;
+  gap: 32px;
+  max-width: 1100px;
+  margin: 0 auto;
 }
-
-.contact-form, .contact-info {
-  flex: 1;
+.contact-form {
   min-width: 300px;
   background: #fff;
   padding: 25px;
@@ -303,6 +351,27 @@
   box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
   text-align: left;
 }
+
+.contact-form {
+  max-width: 640px;
+  width: 100%;
+}
+
+/* removed: contact-info styles no longer required */
+
+.contact-form > h2, .contact-form > p {
+  text-align: center;
+}
+
+.form-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: center;
+}
+
+.form-actions .btn { min-width: 140px; }
 
 .contact-form form input,
 .contact-form form textarea {
@@ -313,6 +382,24 @@
   border-radius: 6px;
   font-size: 1rem;
 }
+
+.contact-form form {
+  width: 100%;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form-field {
+  display: block;
+  margin-top: 12px;
+}
+
 
 .contact-form form button {
   background: #e91e63;
@@ -329,17 +416,6 @@
   background: #d81b60;
 }
 
-.contact-info h3 {
-  margin-bottom: 15px;
-  font-size: 1.5rem;
-  color: #673ab7;
-}
-
-.contact-info p {
-  margin: 10px 0;
-  font-size: 1rem;
-  color: #444;
-}
 
 .social-links {
   margin-top: 20px;
@@ -373,6 +449,14 @@
   }
   .nav-list {
     flex-direction: column;
+  }
+  .contact-wrapper {
+    display: block;
+  }
+  .contact-form {
+    width: 100%;
+    display: block;
+    margin: 0 auto 20px auto;
   }
 }
 /* Yellow hover effect for hero section CerviCare */
