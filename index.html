@@ -3,7 +3,2971 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initi<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CerviCare - Cervical Cancer Awareness</title>
+    <!-- AOS (Animate On Scroll) - CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* ------------------------- CHATBOT FLOATING BUTTON ---------------------- */
+       :root {
+      --primary-color: #c2185b;
+      --secondary-color: #e91e63;
+      --dark-color: #880e4f;
+      --light-color: #f5f5f5;
+      --success-color: #4CAF50;
+      --error-color: #f44336;
+      --warning-color: #ff9800;
+      --info-color: #2196F3;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --box-shadow-light: 0 2px 8px rgba(0, 0, 0, 0.1);
+      --box-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.15);
+      --box-shadow-heavy: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* ==================== ANIMATIONS ==================== */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes glow {
+      0%, 100% { box-shadow: 0 4px 10px rgba(194, 24, 91, 0.3); }
+      50% { box-shadow: 0 4px 20px rgba(194, 24, 91, 0.6); }
+    }
+
+    @keyframes shimmer {
+      0% { background-position: -1000px 0; }
+      100% { background-position: 1000px 0; }
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideDown {
+      from {
+        transform: translateY(-50px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    @keyframes rotateIn {
+      from {
+        transform: rotate(-5deg);
+        opacity: 0;
+      }
+      to {
+        transform: rotate(0);
+        opacity: 1;
+      }
+    }
+
+    /* ==================== CHATBOT BUTTON ==================== */
+    #chatbot-btn {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      cursor: pointer;
+      font-size: 28px;
+      box-shadow: var(--box-shadow-heavy);
+      z-index: 9999;
+      transition: var(--transition);
+      animation: bounce 2s infinite;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #chatbot-btn:hover {
+      animation: glow 1.5s infinite;
+      transform: scale(1.1);
+      box-shadow: 0 8px 30px rgba(194, 24, 91, 0.6);
+    }
+
+    #chatbot-btn:active {
+      transform: scale(0.95);
+    }
+
+    /* ==================== CHATBOT WINDOW ==================== */
+    #chatbot-window {
+      position: fixed;
+      bottom: 100px;
+      right: 25px;
+      width: 500px;
+      height: 650px;
+      max-width: calc(100vw - 50px);
+      max-height: calc(100vh - 130px);
+      background: white;
+      border-radius: 16px;
+      box-shadow: var(--box-shadow-heavy);
+      display: none;
+      flex-direction: column;
+      overflow: hidden;
+      z-index: 9999;
+      transition: var(--transition);
+      animation: slideIn 0.4s ease-out;
+    }
+
+    #chatbot-window.fullscreen {
+      width: 100vw;
+      height: 100vh;
+      max-width: 100vw;
+      max-height: 100vh;
+      bottom: 0;
+      right: 0;
+      border-radius: 0;
+    }
+
+    #chatbot-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 16px;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-shrink: 0;
+      box-shadow: var(--box-shadow-light);
+    }
+
+    #chatbot-header span {
+      flex: 1;
+      animation: fadeInUp 0.5s ease;
+    }
+
+    .header-buttons {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #fullscreen-btn, #close-chatbot-btn, #save-assessment-btn {
+      background: transparent;
+      border: none;
+      color: white;
+      cursor: pointer;
+      padding: 6px 10px;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #fullscreen-btn:hover, #save-assessment-btn:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: scale(1.15);
+    }
+
+    #close-chatbot-btn:hover {
+      background: rgba(255, 68, 68, 0.3);
+      color: #ffcccc;
+      transform: scale(1.2) rotate(90deg);
+    }
+
+    #save-assessment-btn.saved {
+      color: var(--success-color);
+      animation: bounce 0.6s ease;
+    }
+
+    #chatbot-iframe {
+      flex: 1;
+      width: 100%;
+      border: none;
+      background: white;
+      min-height: 0;
+    }
+
+    .save-notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, var(--success-color) 0%, #45a049 100%);
+      color: white;
+      padding: 16px 24px;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow-heavy);
+      z-index: 10000;
+      animation: slideIn 0.4s ease-out;
+      display: none;
+      font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+      #chatbot-window {
+        width: calc(100vw - 20px);
+        height: calc(100vh - 120px);
+        right: 10px;
+        bottom: 80px;
+        border-radius: 12px;
+      }
+
+      #chatbot-btn {
+        width: 56px;
+        height: 56px;
+        bottom: 20px;
+        right: 15px;
+      }
+    }
+
+    /* ==================== LOCATION STYLES ==================== */
+    #location-display {
+      margin: 20px 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+      border-radius: 12px;
+      display: none;
+      border-left: 4px solid var(--primary-color);
+      box-shadow: var(--box-shadow-light);
+      animation: slideInUp 0.5s ease;
+    }
+
+    #location-display.active {
+      display: block;
+    }
+
+    .location-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      font-weight: 500;
+    }
+
+    .location-info span:first-child {
+      color: var(--primary-color);
+      font-size: 20px;
+    }
+
+    .location-coordinates {
+      font-size: 13px;
+      color: #666;
+      margin-top: 8px;
+      padding: 8px;
+      background: white;
+      border-radius: 6px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .location-status {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      display: none;
+      font-weight: 500;
+      animation: slideInUp 0.4s ease;
+    }
+
+    .location-status.success {
+      background: #d4edda;
+      color: #155724;
+      border-left: 3px solid #28a745;
+    }
+
+    .location-status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border-left: 3px solid #dc3545;
+    }
+
+    /* ==================== FIND CARE BUTTON ==================== */
+    #findCareBtn {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 14px 32px;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow-medium);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    #findCareBtn:hover:not(:disabled) {
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow-heavy);
+    }
+
+    #findCareBtn:active:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    #findCareBtn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+
+    .loading-location {
+      display: inline-block;
+      animation: pulse 1.5s infinite;
+    }
+
+    /* ==================== HOSPITAL LIST STYLES ==================== */
+    #hospitals-list {
+      margin-top: 40px;
+      display: none;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    #hospitals-list.active {
+      display: block;
+    }
+
+    .hospitals-header {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 12px 12px 0 0;
+      font-size: 20px;
+      font-weight: 600;
+      text-align: center;
+      box-shadow: var(--box-shadow-medium);
+      animation: slideDown 0.4s ease;
+    }
+
+    .hospital-item {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--box-shadow-light);
+      transition: var(--transition);
+      animation: fadeInUp 0.5s ease backwards;
+    }
+
+    .hospital-item:nth-child(1) { animation-delay: 0.1s; }
+    .hospital-item:nth-child(2) { animation-delay: 0.2s; }
+    .hospital-item:nth-child(3) { animation-delay: 0.3s; }
+    .hospital-item:nth-child(n+4) { animation-delay: 0.4s; }
+
+    .hospital-item:hover {
+      transform: translateY(-8px);
+      box-shadow: var(--box-shadow-heavy);
+      border-color: var(--primary-color);
+    }
+
+    .hospital-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--primary-color);
+      margin-bottom: 12px;
+      border-bottom: 2px solid #f0f0f0;
+      padding-bottom: 10px;
+      transition: var(--transition);
+    }
+
+    .hospital-item:hover .hospital-name {
+      color: var(--secondary-color);
+    }
+
+    .hospital-details {
+      color: #555;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .hospital-details strong {
+      color: #333;
+    }
+
+    .hospital-link {
+      color: var(--info-color);
+      text-decoration: none;
+      font-weight: 500;
+      margin-left: 8px;
+      transition: var(--transition);
+      display: inline-block;
+    }
+
+    .hospital-link:hover {
+      text-decoration: underline;
+      color: var(--primary-color);
+      transform: translateX(3px);
+    }
+
+    .hospitals-container {
+      max-height: 600px;
+      overflow-y: auto;
+      padding: 20px;
+      background: #fafafa;
+      border-radius: 0 0 12px 12px;
+    }
+
+    .hospitals-container::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .hospitals-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .hospitals-container::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      border-radius: 10px;
+      transition: var(--transition);
+    }
+
+    .hospitals-container::-webkit-scrollbar-thumb:hover {
+      background: linear-gradient(180deg, var(--secondary-color) 0%, var(--dark-color) 100%);
+    }
+
+    /* ==================== AUTH MODAL STYLES ==================== */
+    .auth-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(5px);
+      animation: fadeIn 0.3s ease;
+    }
+
+    .auth-modal.active {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .auth-modal-content {
+      background-color: white;
+      padding: 40px;
+      border-radius: 16px;
+      width: 90%;
+      max-width: 450px;
+      box-shadow: var(--box-shadow-heavy);
+      animation: scaleIn 0.4s ease;
+      position: relative;
+      border: 2px solid #f0f0f0;
+    }
+
+    .close-auth-modal {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      font-size: 32px;
+      font-weight: bold;
+      color: #999;
+      cursor: pointer;
+      border: none;
+      background: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+    }
+
+    .close-auth-modal:hover {
+      color: var(--primary-color);
+      background: #f5f5f5;
+      transform: rotate(90deg);
+    }
+
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 24px;
+      border-bottom: 3px solid #f0f0f0;
+      gap: 0;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 500;
+      color: #999;
+      transition: var(--transition);
+      position: relative;
+    }
+
+    .auth-tab:hover {
+      color: var(--primary-color);
+    }
+
+    .auth-tab.active {
+      color: var(--primary-color);
+    }
+
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -3px;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      animation: slideInLeft 0.3s ease;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+      animation: fadeInUp 0.3s ease;
+    }
+
+    .auth-form-group {
+      margin-bottom: 20px;
+    }
+
+    .auth-form-group label {
+      display: block;
+      margin-bottom: 10px;
+      color: #333;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .auth-form-group input {
+      width: 100%;
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: var(--transition);
+      box-sizing: border-box;
+    }
+
+    .auth-form-group input:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.1);
+    }
+
+    .auth-submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 16px;
+      box-shadow: var(--box-shadow-medium);
+    }
+
+    .auth-submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--box-shadow-heavy);
+    }
+
+    .auth-submit-btn:active {
+      transform: translateY(0);
+    }
+
+    .auth-message {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      display: none;
+      font-size: 14px;
+      font-weight: 500;
+      animation: slideInUp 0.3s ease;
+    }
+
+    .auth-message.success {
+      background: #d4edda;
+      color: #155724;
+      border-left: 4px solid #28a745;
+    }
+
+    .auth-message.error {
+      background: #f8d7da;
+      color: #721c24;
+      border-left: 4px solid #dc3545;
+    }
+
+    /* ==================== LOGIN NAV STYLES ==================== */
+    .login-btn-nav {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      margin-left: 12px;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow-light);
+    }
+
+    .login-btn-nav:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--box-shadow-medium);
+    }
+
+    .user-info-nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--primary-color);
+      font-weight: 600;
+      animation: slideInRight 0.4s ease;
+    }
+
+    .logout-btn {
+      background: linear-gradient(135deg, #ff5252 0%, #ff1744 100%);
+      color: white;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow-light);
+    }
+
+    .logout-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(255, 23, 68, 0.3);
+    }
+
+    /* Profile avatar + dropdown in navbar */
+    .profile-avatar {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      user-select: none;
+    }
+
+    .profile-dropdown {
+      position: absolute;
+      right: 25;
+      top: 46px;
+      min-width: 180px;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+      padding: 8px 0;
+      display: none;
+      z-index: 10001;
+    }
+
+    .profile-dropdown.active { display: block; }
+
+    .profile-dropdown-item {
+      padding: 10px 14px;
+      cursor: pointer;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .profile-dropdown-item:hover { background: #f5f5f5; }
+
+    /* ==================== REMINDERS STYLES ==================== */
+    .reminder-section {
+      background: white;
+      padding: 32px 0;
+      border-top: 2px solid #f0f0f0;
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .reminder-section h2 {
+      color: var(--primary-color);
+      margin-bottom: 16px;
+      font-size: 28px;
+    }
+
+    .reminder-input {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .reminder-input input[type="date"],
+    .reminder-input select {
+      padding: 12px 14px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      transition: var(--transition);
+      background: white;
+    }
+
+    .reminder-input input[type="date"]:focus,
+    .reminder-input select:focus {
+      outline: none;
+      border-color: var(--primary-color);
+      box-shadow: 0 0 0 3px rgba(194, 24, 91, 0.1);
+    }
+
+    .hygiene-list {
+      margin-top: 16px;
+      list-style: none;
+      padding: 0;
+    }
+
+    .hygiene-list li {
+      padding: 12px 16px;
+      margin-bottom: 10px;
+      background: linear-gradient(135deg, #f5f5f5 0%, #fafafa 100%);
+      border-left: 4px solid var(--primary-color);
+      border-radius: 6px;
+      color: #444;
+      transition: var(--transition);
+      animation: fadeInUp 0.4s ease backwards;
+    }
+
+    .hygiene-list li:nth-child(1) { animation-delay: 0.1s; }
+    .hygiene-list li:nth-child(2) { animation-delay: 0.2s; }
+    .hygiene-list li:nth-child(3) { animation-delay: 0.3s; }
+    .hygiene-list li:nth-child(4) { animation-delay: 0.4s; }
+    .hygiene-list li:nth-child(5) { animation-delay: 0.5s; }
+
+    .hygiene-list li:hover {
+      transform: translateX(6px);
+      box-shadow: var(--box-shadow-medium);
+      background: linear-gradient(135deg, #fff0f5 0%, #fff5f7 100%);
+      border-left-color: var(--secondary-color);
+    }
+
+    #hpvRemindersList {
+      margin-top: 16px;
+    }
+
+    #hpvRemindersList div {
+      background: white;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 12px 14px;
+      margin-bottom: 10px;
+      transition: var(--transition);
+      animation: slideInUp 0.3s ease;
+    }
+
+    #hpvRemindersList div:hover {
+      border-color: var(--primary-color);
+      box-shadow: var(--box-shadow-light);
+    }
+
+    /* ==================== SECTION ENHANCEMENTS ==================== */
+    section {
+      animation: fadeInUp 0.6s ease;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    section h2 {
+      color: var(--primary-color);
+      font-size: 32px;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 16px;
+    }
+
+    section h2::after {
+      /* decorative underline removed per request */
+      display: none;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow-medium);
+      display: inline-block;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--box-shadow-heavy);
+    }
+
+    .btn:active {
+      transform: translateY(-1px);
+    }
+
+    /* ==================== RESPONSIVE MEDIA QUERIES ==================== */
+    @media (max-width: 768px) {
+      #chatbot-window {
+        border-radius: 12px;
+      }
+
+      .auth-modal-content {
+        padding: 30px;
+      }
+
+      section h2 {
+        font-size: 24px;
+      }
+
+      .reminder-input {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .reminder-input input,
+      .reminder-input select,
+      .reminder-input button {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #chatbot-btn {
+        width: 52px;
+        height: 52px;
+        font-size: 24px;
+      }
+
+      .auth-modal-content {
+        padding: 20px;
+        max-width: 95%;
+      }
+
+      section h2 {
+        font-size: 20px;
+      }
+
+      section h2::after {
+        width: 40px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar background">
+      <div class="logo">
+        <img src="img/bg.jpg" alt="CerviCare Logo">
+      </div>
+      <ul class="nav-list">
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#resources">Resources</a></li>
+        <li><a href="#findcare">Find Care</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <!-- Hamburger for small screens -->
+      <div class="hamburger-section">
+      <button id="hamburgerBtn" class="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      </div>
+
+      <div class="rightNav">
+        <input type="text" name="search" id="search" placeholder="Search...">
+        <button class="btn btn-sm">Search</button>
+        <!-- Three-dot options button -->
+        
+        <div id="auth-nav-container">
+            <button class="login-btn-nav" id="loginBtnNav">Login</button>
+            <div class="options-wrap">
+              <button id="optionsBtn" class="three-dots-btn" aria-label="More options" aria-expanded="false" aria-haspopup="true">
+                <span class="dot" aria-hidden="true"></span>
+                <span class="dot" aria-hidden="true"></span>
+                <span class="dot" aria-hidden="true"></span>
+              </button>
+              <ul id="optionsMenu" class="options-menu" role="menu" aria-hidden="true">
+                <li role="none" id="optProfile"><a role="menuitem" href="#profile" id="optProfileLink">Profile</a></li>
+                <li role="none"><a role="menuitem" href="#settings">Settings</a></li>
+                <li role="none"><a role="menuitem" href="#help">Help</a></li>
+              </ul>
+            </div>
+        </div>
+      </div>
+      <!-- Mobile menu (hidden on desktop) -->
+      <div id="mobileMenu" class="mobile-menu" aria-hidden="true">
+        <nav class="mobile-nav">
+          <div class="menu-header" role="banner">
+            <div class="menu-logo">
+              <img src="img/bg.jpg" alt="CerviCare logo">
+            </div>
+            <button id="mobileMenuClose" class="mobile-menu-close" aria-label="Close menu">×</button>
+          </div>
+          <ul class="mobile-nav-list" role="menu">
+            <li class="accordion" role="none">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="3" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1"/><rect x="13" y="3" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.85"/><rect x="3" y="13" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.85"/><rect x="13" y="13" width="8" height="8" stroke="currentColor" stroke-width="1.5" rx="1" opacity="0.6"/></svg></span>
+                <span class="acc-label">Category</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden role="menu">
+                <li><a href="#Home">Home
+                <li><a href="#about">About</a></li>
+                <li class="accordion">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7a4 4 0 100-8 4 4 0 000 8z" transform="translate(0,7)" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span>
+                <span class="acc-label">My Government</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden>
+                <li><a href="https://www.who.int/health-topics/cervical-cancer#tab=tab_1">WHO</a></li>
+                <li><a href="https://www.nhp.gov.in/">National Health Po</a></li>
+                <li><a href="https://www.cdc.gov/cancer/cervical/">CDC</a></li>
+              </ul>
+            </li>
+                <li><a href="#resources">Resources</a></li>
+                <li><a href="#findcare">Find Care</a></li>
+                <li><a href="#contact">Contact</a>
+                  
+            
+            
+            </li>
+              </ul>
+            </li>
+            <li class="accordion">
+              <button class="accordion-btn" aria-expanded="false">
+                <span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 21v-2a4 4 0 014-4h10a4 4 0 014 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 7a4 4 0 100-8 4 4 0 000 8z" transform="translate(0,7)" stroke="currentColor" stroke-width="1.5" fill="none"/></svg></span>
+                <span class="acc-label">My Government</span>
+                <span class="acc-caret" aria-hidden="true">▾</span>
+              </button>
+              <ul class="acc-panel" hidden>
+                <li><a href="https://www.who.int/health-topics/cervical-cancer#tab=tab_1">Portal 1</a></li>
+                <li><a href="https://www.nhp.gov.in/">Portal 2</a></li>
+                <li><a href="https://www.cdc.gov/cancer/cervical/">Portal 3</a></li>
+              </ul>
+            
+            
+            </li>
+            <li role="none"><a role="menuitem" href="#about"><span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M11 12h2v5h-2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>About Us</a></li>
+            <li role="none"><a role="menuitem" href="#contact"><span class="acc-icon" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15a3 3 0 01-3 3h-1a11 11 0 01-11-11v-1a3 3 0 013-3h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 21l-5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Contact</a></li>
+          </ul>
+          <div class="menu-section">
+            <h4 class="menu-section-title">Utility</h4>
+            <div class="menu-section-list">
+              <a href="#contact">Contact Us</a>
+              <a href="#feedback">Feedback</a>
+              <a href="#faqs">FAQs</a>
+            </div>
+          </div>
+          <div class="mobile-auth" id="mobile-auth-container">
+            <button class="login-btn-nav" id="mobileLoginBtn">Login</button>
+          </div>
+        </nav>
+      </div>
+      <div id="mobileBackdrop" class="mobile-backdrop" hidden></div>
+    </nav>
+  </header>
+
+
+
+  <!-- Hero Section -->
+  <section id="home" class="background firstsection" data-aos="fade-right" data-aos-delay="120" data-aos-duration="800">
+    <div class="box-main">
+      <div class="firstHalf">
+        <h1 class="text-big hover-yellow">CerviCare</h1>
+        <p class="text-small">
+          Empowering women across India with AI-driven cervical cancer awareness, early
+          detection, and compassionate care guidance — breaking barriers of stigma and taboo.
+        </p>
+        <div class="buttons">
+          <button class="btn" id="getStartedBtn">Get Started</button>
+          <button class="btn" id="learnMoreBtn">Learn More</button>
+        </div>
+      </div>
+      <div class="secondHalf">
+        <img src="img/bg.jpg" alt="CerviCare Awareness Image">
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about-section" data-aos="fade-right" data-aos-delay="120" data-aos-duration="800">
+    <div class="container">
+      <h2>About</h2>
+      <p>
+        CerviCare is an AI-driven health awareness platform dedicated to 
+        empowering women with reliable information about cervical cancer. 
+        Our mission is to break the stigma, spread awareness and encourage 
+        early detection through a simple, private and accessible chatbot. 
+        By combining technology, healthcare expertise and user-friendly 
+        design. CerviCare aims to guide women towards prevention, timely 
+        screening and improved well-being.
+      </p>
+      <p>
+        With CerviCare, we believe that awareness can save lives. 
+        Together, we can build a future where no woman is left behind 
+        due to lack of knowledge or hesitation in seeking help.
+      </p>
+    </div>
+  </section>
+
+  <!-- Resources Section -->
+  <section id="resources">
+    <div class="container">
+      <h2>Resources</h2>
+      <p>
+        At <strong>CerviCare</strong>, we believe awareness saves lives. This section provides 
+        easy access to trusted information on cervical cancer prevention, early detection
+        and treatment.
+      </p>
+
+      <div class="resource-links">
+        <a href="https://www.who.int/health-topics/cervical-cancer" target="_blank">WHO Guidelines</a>
+        <a href="https://www.nhp.gov.in/" target="_blank">National Health Portal</a>
+        <a href="https://www.cdc.gov/cancer/cervical/" target="_blank">CDC Resources</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Find Care Section -->
+  <section id="findcare">
+    <div class="container">
+      <h2>Find Care</h2>
+      <p>
+        Connect with nearby hospitals, clinics and doctors specializing in women's health.
+      </p>
+      <div class="findcare-button">
+        <button id="findCareBtn">
+          <span id="btnText">📍 Find Nearby HealthCare</span>
+          <span class="loading-location" id="loadingIndicator" style="display: none;">⏳ Getting location...</span>
+        </button>
+      </div>
+      
+      <div id="location-display">
+        <div class="location-info">
+          <span>📍 Your Location:</span>
+          <span id="locationAddress">Loading...</span>
+        </div>
+        <div class="location-coordinates" id="locationCoords"></div>
+        <div class="location-status" id="locationStatus"></div>
+        <div style="margin-top: 15px;">
+          <button id="viewOnMapBtn" style="background: #4CAF50; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer; margin-right: 10px;">
+            🗺️ View on Map
+          </button>
+          <button id="searchNearbyBtn" style="background: #2196F3; color: white; padding: 8px 16px; border: none; border-radius: 4px; cursor: pointer;">
+            🔍 Search Nearby Hospitals
+          </button>
+        </div>
+      </div>
+
+      <!-- Hospitals List -->
+      <div id="hospitals-list">
+        <div class="hospitals-header">
+          🏥 Recommended Hospitals for Cervical Cancer Care in Delhi NCR
+        </div>
+        <div class="hospitals-container" id="hospitals-container">
+          <!-- Hospital list will be dynamically inserted here -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Vaccination Reminder -->
+  <section id="vaccinationReminder" class="reminder-section">
+    <div class="container">
+      <h2>Vaccination Reminder</h2>
+      <p>Stay on top of your cervical cancer vaccination schedule.</p>
+      <div class="reminder-input">
+        <input type="date" id="vaccineDate">
+        <button class="btn" id="setReminder">📅 Set Reminder</button>
+      </div>
+      <p id="reminderMessage"></p>
+    </div>
+  </section>
+
+  <!-- Personal Hygiene Section -->
+  <section id="personalHygiene" class="about-section">
+    <div class="container">
+      <h2>Personal Hygiene</h2>
+      <p>Simple habits to support reproductive health and reduce infection risk.</p>
+      <ul class="hygiene-list">
+        <li>Use mild, unscented soap for external cleansing only. Avoid douching.</li>
+        <li>Wear breathable cotton underwear and change regularly.</li>
+        <li>Wipe from front to back after using the toilet.</li>
+        <li>Maintain regular sexual health checkups and use protection to reduce STI risk.</li>
+        <li>Keep menstrual hygiene: change pads/tampons frequently and wash hands.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- HPV Tests & Screening Notifications -->
+  <section id="hpvNotifications" class="reminder-section">
+    <div class="container">
+      <h2>HPV Tests & Screening</h2>
+      <p>Set reminders for Pap smear, HPV test or VIA screening. Browser notifications work while this page is open (request permission below).</p>
+      <div class="reminder-input" style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <input type="date" id="hpvDate">
+        <select id="screeningType">
+          <option value="pap">Pap Smear</option>
+          <option value="hpv">HPV Test</option>
+          <option value="via">VIA Screening</option>
+        </select>
+        <button class="btn" id="setHPVReminder">🔔 Set Reminder</button>
+      </div>
+      <p id="hpvMessage"></p>
+      <div id="hpvRemindersList" style="margin-top:12px;"></div>
+      <div style="margin-top:10px;">
+        <button class="btn" id="enableNotificationsBtn">Enable Browser Notifications</button>
+      </div>
+    </div>
+  </section>
+
+<!-- Contact Section -->
+<section id="contact" class="about-section" data-aos="fade-up" data-aos-delay="120" data-aos-duration="800">
+  <div class="container contact-wrapper">
+    <div class="contact-form">
+      <h2>Contact Us</h2>
+      <p>Send us a message and our team will get back to you as soon as possible.</p>
+
+      <form id="contactForm" action="https://formspree.io/f/xgvgpzgz" method="POST" aria-label="Contact form" style="margin-top:16px;">
+        <div class="form-row">
+          <label class="form-field">
+            <div style="font-weight:600;margin-bottom:6px;">Name</div>
+            <input id="contactName" type="text" required placeholder="Your name" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+          </label>
+          <label class="form-field">
+            <div style="font-weight:600;margin-bottom:6px;">Email</div>
+            <input id="contactEmail" type="email" required placeholder="you@example.com" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+          </label>
+        </div>
+
+        <label class="form-field">
+          <div style="font-weight:600;margin-bottom:6px;">Subject</div>
+          <input id="contactSubject" type="text" placeholder="Subject" style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;">
+        </label>
+
+        <label class="form-field">
+          <div style="font-weight:600;margin-bottom:6px;">Message</div>
+          <textarea id="contactMessage" rows="6" required placeholder="Write your message..." style="width:100%;padding:10px;border:2px solid #e0e0e0;border-radius:8px;"></textarea>
+        </label>
+
+        <div class="form-actions">
+          <button type="submit" class="btn">Send Message</button>
+          <button type="button" id="contactReset" class="btn" style="background:#888;">Reset</button>
+          <div id="contactFormStatus" aria-live="polite" style="margin-left:12px;font-weight:600;"></div>
+        </div>
+      </form>
+
+      <div style="margin-top:18px;color:#555;font-size:14px;">
+        
+      </div>
+    </div>
+
+    <!-- aside removed as requested -->
+  </div>
+</section>
+
+<!-- Profile is now managed by backend. Frontend will fetch profile on demand -->
+<!-- Removed static #profile section per backend migration request -->
+
+
+  <!-- ---------------- CHATBOT UI (FLOATING) ---------------- -->
+  <button id="chatbot-btn">💬</button>
+
+  <div id="chatbot-window">
+    <div id="chatbot-header">
+      <span>CerviCare AI</span>
+      <div class="header-buttons">
+        <button id="save-assessment-btn" title="Save Assessment">💾 Save</button>
+        <button id="fullscreen-btn" title="Enter Fullscreen">⊞</button>
+        <button id="close-chatbot-btn" title="Close Chatbot">×</button>
+      </div>
+    </div>
+    <iframe id="chatbot-iframe" src="https://cervibot.onrender.com/" frameborder="0" allow="microphone; camera" loading="lazy"></iframe>
+  </div>
+
+  <!-- Save Notification -->
+  <div id="save-notification" class="save-notification">
+    Assessment saved successfully! ✓
+  </div>
+
+  <!-- Login/Signup Modal -->
+  <div id="authModal" class="auth-modal">
+    <div class="auth-modal-content">
+      <button class="close-auth-modal" id="closeAuthModal">&times;</button>
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab">Login</button>
+        <button class="auth-tab" id="signupTab">Sign Up</button>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <div class="auth-form-group">
+          <label for="loginEmail">Email (Gmail)</label>
+          <input type="email" id="loginEmail" placeholder="your.email@gmail.com" required>
+        </div>
+        <div class="auth-form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required>
+        </div>
+        <button type="submit" class="auth-submit-btn">Login</button>
+        <div class="auth-message" id="loginMessage"></div>
+      </form>
+
+      <!-- Signup Form -->
+      <form class="auth-form" id="signupForm">
+        <div class="auth-form-group">
+          <label for="signupEmail">Email (Gmail)</label>
+          <input type="email" id="signupEmail" placeholder="your.email@gmail.com" required>
+        </div>
+        <div class="auth-form-group">
+          <label for="signupPassword">Password</label>
+          <input type="password" id="signupPassword" placeholder="Create a password (min 6 characters)" required minlength="6">
+        </div>
+        <div class="auth-form-group">
+          <label for="confirmPassword">Confirm Password</label>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required minlength="6">
+        </div>
+        <button type="submit" class="auth-submit-btn">Create Account</button>
+        <div class="auth-message" id="signupMessage"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-inner container">
+      <div class="footer-col footer-about">
+        <a class="footer-logo" href="#home">
+          <img src="img/bg.jpg" alt="CerviCare" />
+        </a>
+        <p>Empowering women with trusted cervical health information, screening reminders, and compassionate care guidance.</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Facebook" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7h-2.2v-2.9h2.2V9.3c0-2.2 1.3-3.4 3.2-3.4.9 0 1.9.16 1.9.16v2.1h-1.1c-1.1 0-1.5.74-1.5 1.5v1.8h2.6l-.4 2.9h-2.2v7A10 10 0 0 0 22 12z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter" class="social-link"> 
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.2 4.2 0 0 0 1.84-2.32 8.36 8.36 0 0 1-2.66 1.02 4.18 4.18 0 0 0-7.12 3.81A11.86 11.86 0 0 1 3.16 4.6a4.18 4.18 0 0 0 1.29 5.58c-.66-.02-1.28-.2-1.82-.5v.05a4.18 4.18 0 0 0 3.36 4.1c-.33.09-.68.14-1.04.14-.25 0-.5-.02-.74-.07a4.19 4.19 0 0 0 3.9 2.9A8.39 8.39 0 0 1 2 19.54 11.83 11.83 0 0 0 8.29 21c7.55 0 11.68-6.25 11.68-11.66v-.53A8.18 8.18 0 0 0 22.46 6z"/></svg>
+          </a>
+          <a href="#" aria-label="Instagram" class="social-link">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm5 6.1a4.9 4.9 0 1 0 0 9.8 4.9 4.9 0 0 0 0-9.8zm6.5-2.6a1.1 1.1 0 1 1-2.2 0 1.1 1.1 0 0 1 2.2 0z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col footer-links">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#about">About</a></li>
+          <li><a href="#resources">Resources</a></li>
+          <li><a href="#findcare">Find Care</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col footer-contact">
+        <h4>Contact</h4>
+        <address>
+          CerviCare Clinic<br>
+          123 Health an<br>
+          <a href="tel:+911234567890">+91 12345 67890</a><br>
+          <a href="mailto:cervicare0@gmail.com">cervicare0@gmail.com</a>
+        </address>
+      </div>
+
+      <div class="footer-col footer-newsletter">
+        <h4>Stay Informed</h4>
+        <p>Get screening reminders and health tips — delivered to your inbox.</p>
+        <form id="footerNewsletter" class="newsletter-form">
+          <input type="email" id="newsletterEmail" placeholder="Your email" required />
+          <button type="submit" class="btn">Subscribe</button>
+        </form>
+        <div id="newsletterMessage" class="small muted"></div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="bottom-center">© 2025 CerviCare — All rights reserved</div>
+        <div class="bottom-right">
+          <a href="#" id="backToTop" class="back-to-top">Back to top ↑</a>
+        </div>
+      </div>  
+    </div>
+  </footer>
+
+  <!-- sticky bottom bar removed -->
+
+  <style>
+  /* Footer styles */
+  .site-footer{background:linear-gradient(180deg,#f8fafc,#ffffff);color:var(--text,#222);padding-top:44px;padding-bottom:12px;border-top:1px solid rgba(0,0,0,.05)}
+  .site-footer .footer-inner{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.1fr;gap:20px;padding:28px 0}
+  .site-footer .footer-col h4{margin:0 0 8px;font-size:15px}
+  .site-footer .footer-about p{max-width:360px;color:#444}
+  .footer-logo img{width:56px;height:56px;border-radius:8px;object-fit:cover}
+  .footer-social{margin-top:10px;display:flex;gap:8px}
+  .social-link{color:var(--accent,#4a90e2);opacity:.9}
+  .footer-links ul{list-style:none;padding:0;margin:0}
+  .footer-links li{margin:8px 0}
+  .footer-links a{color:inherit;text-decoration:none}
+  .footer-contact address{font-style:normal;color:#444}
+  .newsletter-form{display:flex;gap:8px;margin-top:8px}
+  .newsletter-form input{flex:1;padding:8px;border-radius:8px;border:1px solid #e3e6ee}
+  .newsletter-form button{padding:8px 12px}
+  .small.muted{font-size:13px;color:#666;margin-top:8px}
+
+  .footer-bottom{border-top:1px solid rgba(0,0,0,.04);padding:12px 0;margin-top:18px}
+  .footer-bottom .container{display:flex;justify-content:center;align-items:center;gap:12px}
+  .back-to-top{color:var(--accent,#4a90e2);text-decoration:none}
+
+  .sb-link{color:var(--accent,#4a90e2);text-decoration:none}
+  .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,.06)}
+
+  @media (max-width:900px){
+    .site-footer .footer-inner{grid-template-columns:1fr;gap:18px}
+    .footer-bottom .container{flex-direction:column;gap:8px}
+    /* sticky bottom bar removed; responsive footer adjustments kept */
+  }
+  </style>
+
+  <script>
+    // Footer interactions: newsletter and back-to-top
+    document.getElementById('footerNewsletter')?.addEventListener('submit', function(e){
+      e.preventDefault();
+      const em = document.getElementById('newsletterEmail').value.trim();
+      const msg = document.getElementById('newsletterMessage');
+      if (!em) { if (msg) msg.textContent = 'Please enter your email.'; return; }
+      // naive local save for demo
+      try { const arr=JSON.parse(localStorage.getItem('cervicareNewsletter')||'[]'); arr.push({email:em,at:new Date().toISOString()}); localStorage.setItem('cervicareNewsletter', JSON.stringify(arr)); if (msg) msg.textContent='Subscribed — thank you!'; this.reset(); }
+      catch(err){ if (msg) msg.textContent='Subscription failed.' }
+    });
+
+    document.getElementById('backToTop')?.addEventListener('click', function(e){ e.preventDefault(); window.scrollTo({top:0,behavior:'smooth'}); });
+
+    // Sticky bar removed — no bottom actions
+  </script>
+
+
+  <!-- ------------------- JAVASCRIPT SECTION ------------------ -->
+<script>
+  // Wait for DOM to be fully loaded
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeChatbot();
+  });
+
+  function initializeChatbot() {
+    const chatbotBtn = document.getElementById("chatbot-btn");
+    const chatbotWindow = document.getElementById("chatbot-window");
+    const fullscreenBtn = document.getElementById("fullscreen-btn");
+    const closeChatbotBtn = document.getElementById("close-chatbot-btn");
+    const saveAssessmentBtn = document.getElementById("save-assessment-btn");
+    const chatbotIframe = document.getElementById("chatbot-iframe");
+    const saveNotification = document.getElementById("save-notification");
+    const getStartedBtn = document.getElementById("getStartedBtn");
+    const learnMoreBtn = document.getElementById("learnMoreBtn");
+
+    if (!chatbotBtn || !chatbotWindow) {
+      console.error("Chatbot elements not found!");
+      return;
+    }
+
+    let isOpen = false;
+    
+    // Load saved fullscreen preference from localStorage
+    let isFullscreen = localStorage.getItem("chatbotFullscreen") === "true";
+
+    // Function to save fullscreen preference
+    function saveFullscreenPreference(value) {
+      localStorage.setItem("chatbotFullscreen", value.toString());
+    }
+
+    // Function to apply fullscreen state
+    function applyFullscreenState() {
+      if (isFullscreen) {
+        chatbotWindow.classList.add("fullscreen");
+        if (fullscreenBtn) {
+          fullscreenBtn.innerHTML = "⊟";
+          fullscreenBtn.title = "Exit Fullscreen";
+        }
+      } else {
+        chatbotWindow.classList.remove("fullscreen");
+        if (fullscreenBtn) {
+          fullscreenBtn.innerHTML = "⊞";
+          fullscreenBtn.title = "Enter Fullscreen";
+        }
+      }
+    }
+
+    // Initialize fullscreen button state on page load
+    applyFullscreenState();
+
+    // Function to open chatbot with embedded iframe
+    function openChatbot() {
+      isOpen = true;
+      chatbotWindow.style.display = "flex";
+      // Apply saved fullscreen preference
+      applyFullscreenState();
+    }
+
+    // Function to close chatbot
+    function closeChatbot() {
+      isOpen = false;
+      chatbotWindow.style.display = "none";
+      // Don't change fullscreen state - keep user preference
+    }
+
+    // Function to toggle fullscreen mode
+    function toggleFullscreen() {
+      isFullscreen = !isFullscreen;
+      // Save preference to localStorage
+      saveFullscreenPreference(isFullscreen);
+      // Apply the change
+      applyFullscreenState();
+    }
+
+    /* Toggle Chatbot Window */
+    chatbotBtn.onclick = function () {
+      if (isOpen) {
+        closeChatbot();
+      } else {
+        openChatbot();
+      }
+    };
+
+    /* Fullscreen Button */
+    if (fullscreenBtn) {
+      fullscreenBtn.onclick = function(e) {
+        e.stopPropagation();
+        toggleFullscreen();
+      };
+    }
+
+    /* Close Chatbot Button */
+    if (closeChatbotBtn) {
+      closeChatbotBtn.onclick = function(e) {
+        e.stopPropagation();
+        closeChatbot();
+      };
+    }
+
+    /* Save Assessment Button */
+    if (saveAssessmentBtn) {
+      saveAssessmentBtn.onclick = function(e) {
+        e.stopPropagation();
+        saveAssessment();
+      };
+    }
+
+    // Function to save assessment
+    function saveAssessment() {
+      try {
+        // Get current timestamp
+        const timestamp = new Date().toISOString();
+        const dateString = new Date().toLocaleString();
+        
+        // Try to capture iframe content via postMessage
+        if (chatbotIframe && chatbotIframe.contentWindow) {
+          try {
+            // Request assessment data from iframe (if it supports postMessage)
+            chatbotIframe.contentWindow.postMessage({ action: 'getAssessmentData' }, 'https://cervibot.onrender.com');
+          } catch (e) {
+            console.log('Cannot access iframe content directly');
+          }
+        }
+
+        // Create assessment object
+        const assessmentData = {
+          timestamp: timestamp,
+          date: dateString,
+          savedAt: new Date().toLocaleString(),
+          url: window.location.href,
+          chatbotUrl: 'https://cervibot.onrender.com/'
+        };
+
+        // Get existing saved assessments
+        let savedAssessments = JSON.parse(localStorage.getItem('cervicareAssessments') || '[]');
+        
+        // Add new assessment
+        savedAssessments.push(assessmentData);
+        
+        // Keep only last 50 assessments
+        if (savedAssessments.length > 50) {
+          savedAssessments = savedAssessments.slice(-50);
+        }
+        
+        // Save to localStorage
+        localStorage.setItem('cervicareAssessments', JSON.stringify(savedAssessments));
+        
+        // Show success notification
+        showSaveNotification();
+        
+        // Update button state
+        saveAssessmentBtn.classList.add('saved');
+        saveAssessmentBtn.innerHTML = '✓ Saved';
+        saveAssessmentBtn.title = 'Assessment Saved';
+        
+        setTimeout(() => {
+          saveAssessmentBtn.classList.remove('saved');
+          saveAssessmentBtn.innerHTML = '💾 Save';
+          saveAssessmentBtn.title = 'Save Assessment';
+        }, 2000);
+        
+      } catch (error) {
+        console.error('Error saving assessment:', error);
+        alert('Error saving assessment. Please try again.');
+      }
+    }
+
+    // Function to show save notification
+    function showSaveNotification() {
+      if (saveNotification) {
+        saveNotification.style.display = 'block';
+        setTimeout(() => {
+          saveNotification.style.display = 'none';
+        }, 3000);
+      }
+    }
+
+    // Listen for messages from iframe (if chatbot sends assessment data)
+    window.addEventListener('message', function(event) {
+      // Only accept messages from the chatbot origin
+      if (event.origin !== 'https://cervibot.onrender.com') {
+        return;
+      }
+      
+      // Handle assessment data from iframe
+      if (event.data && event.data.type === 'assessmentData') {
+        // Update saved assessment with actual data
+        let savedAssessments = JSON.parse(localStorage.getItem('cervicareAssessments') || '[]');
+        if (savedAssessments.length > 0) {
+          savedAssessments[savedAssessments.length - 1].data = event.data.assessment;
+          localStorage.setItem('cervicareAssessments', JSON.stringify(savedAssessments));
+        }
+      }
+    });
+
+    /* Get Started Button - Opens Chatbot */
+    if (getStartedBtn) {
+      getStartedBtn.onclick = function() {
+        openChatbot();
+        // Smooth scroll to top so chatbot is visible
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+    }
+
+    /* Learn More Button - Scrolls to About section */
+    if (learnMoreBtn) {
+      learnMoreBtn.onclick = function() {
+        document.getElementById("about").scrollIntoView({ behavior: "smooth" });
+      };
+    }
+
+    // Handle ESC key to exit fullscreen
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape" && isFullscreen && isOpen) {
+        toggleFullscreen();
+      }
+    });
+  }
+
+  // GPS/Location Functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeGPSFeature();
+  });
+
+  function initializeGPSFeature() {
+    const findCareBtn = document.getElementById("findCareBtn");
+    const locationDisplay = document.getElementById("location-display");
+    const locationAddress = document.getElementById("locationAddress");
+    const locationCoords = document.getElementById("locationCoords");
+    const locationStatus = document.getElementById("locationStatus");
+    const loadingIndicator = document.getElementById("loadingIndicator");
+    const btnText = document.getElementById("btnText");
+    const viewOnMapBtn = document.getElementById("viewOnMapBtn");
+    const searchNearbyBtn = document.getElementById("searchNearbyBtn");
+
+    let userLat = null;
+    let userLng = null;
+    let userAddress = null;
+
+    // Get user's location
+    function getCurrentLocation() {
+      if (!navigator.geolocation) {
+        showError("Geolocation is not supported by your browser.");
+        return;
+      }
+
+      // Show loading state
+      findCareBtn.disabled = true;
+      loadingIndicator.style.display = "inline-block";
+      btnText.style.display = "none";
+      locationStatus.className = "location-status";
+      locationStatus.style.display = "none";
+
+      navigator.geolocation.getCurrentPosition(
+        function(position) {
+          userLat = position.coords.latitude;
+          userLng = position.coords.longitude;
+
+          // Display coordinates
+          locationCoords.textContent = `Coordinates: ${userLat.toFixed(6)}, ${userLng.toFixed(6)}`;
+
+          // Reverse geocode to get address
+          getAddressFromCoordinates(userLat, userLng);
+
+          // Show location display
+          locationDisplay.classList.add("active");
+          findCareBtn.disabled = false;
+          loadingIndicator.style.display = "none";
+          btnText.style.display = "inline";
+        },
+        function(error) {
+          findCareBtn.disabled = false;
+          loadingIndicator.style.display = "none";
+          btnText.style.display = "inline";
+
+          let errorMessage = "Unable to get your location. ";
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              errorMessage += "Please allow location access to find nearby healthcare facilities.";
+              break;
+            case error.POSITION_UNAVAILABLE:
+              errorMessage += "Location information is unavailable.";
+              break;
+            case error.TIMEOUT:
+              errorMessage += "Location request timed out.";
+              break;
+            default:
+              errorMessage += "An unknown error occurred.";
+              break;
+          }
+          showError(errorMessage);
+        },
+        {
+          enableHighAccuracy: true,
+          timeout: 10000,
+          maximumAge: 0
+        }
+      );
+    }
+
+    // Get address from coordinates using reverse geocoding
+    function getAddressFromCoordinates(lat, lng) {
+      // Using Nominatim (OpenStreetMap) for reverse geocoding
+      fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data && data.display_name) {
+            userAddress = data.display_name;
+            locationAddress.textContent = userAddress;
+            showSuccess("Location found successfully!");
+          } else {
+            locationAddress.textContent = "Address not available";
+          }
+        })
+        .catch(error => {
+          console.error("Error getting address:", error);
+          locationAddress.textContent = "Unable to fetch address";
+        });
+    }
+
+    // Show success message
+    function showSuccess(message) {
+      locationStatus.className = "location-status success";
+      locationStatus.textContent = "✓ " + message;
+      locationStatus.style.display = "block";
+    }
+
+    // Show error message
+    function showError(message) {
+      locationStatus.className = "location-status error";
+      locationStatus.textContent = "✗ " + message;
+      locationStatus.style.display = "block";
+    }
+
+    // Open Google Maps with user location
+    function viewOnMap() {
+      if (userLat && userLng) {
+        const url = `https://www.google.com/maps?q=${userLat},${userLng}`;
+        window.open(url, '_blank');
+      } else {
+        showError("Location not available. Please click 'Find Nearby HealthCare' first.");
+      }
+    }
+
+    // Hospital data
+    const hospitals = [
+      {
+        name: "Rajiv Gandhi Cancer Institute and Research Centre (RGCIRC), Delhi",
+        details: "Surgical & gynae-oncology services; known for advanced treatments for gynecological cancers including cervical cancer.",
+        link: "https://en.wikipedia.org/wiki/Rajiv_Gandhi_Cancer_Institute_and_Research_Centre"
+      },
+      {
+        name: "Dharamshila Narayana Superspeciality Hospital, Delhi NCR",
+        details: "Established cancer hospital specializing in comprehensive oncology treatments — radiation, surgery, chemotherapy — suitable for cervical cancer care.",
+        link: "https://en.wikipedia.org/wiki/Dharamshila_Cancer_Hospital_and_Research_Centre"
+      },
+      {
+        name: "Indraprastha Apollo Hospital (with its cancer institute), Delhi",
+        details: "Offers gynecologic oncology and cancer-care services, including cervical cancer treatment.",
+        link: "https://www.myhospitallisting.com/top-10-best-cancer-hospital-in-delhi-ncr/"
+      },
+      {
+        name: "Max Super Speciality Hospital, Saket / Max Institute of Cancer Care",
+        details: "Known among top cancer-care hospitals in Delhi NCR; likely to offer good oncology / gynae-oncology care as well.",
+        link: "https://www.myhospitallisting.com/top-10-best-cancer-hospital-in-delhi-ncr/"
+      },
+      {
+        name: "Fortis Escorts Hospital, Okhla / Cancer Centre, Delhi",
+        details: "Provides 'gynaecological cancer care' and modern oncology services including surgery, radiotherapy, etc.",
+        link: "https://www.fortishealthcare.com/lp/best-oncology-hospital-delhi-fortis-escorts-okhla"
+      },
+      {
+        name: "Pushpawati Singhania Hospital & Research Institute (PSRI), Delhi NCR",
+        details: "Listed among hospitals for cervical cancer doctors in Delhi NCR; could be a candidate for consulting experienced oncologists.",
+        link: "https://omega.credihealth.com/doctors/delhi-ncr/cervical-cancer"
+      },
+      {
+        name: "Sitaram Bhartia Institute of Science and Research, New Delhi",
+        details: "Has oncologists / gynae-oncologists listed under cervical cancer specialists for Delhi-NCR.",
+        link: "https://omega.credihealth.com/doctors/delhi-ncr/cervical-cancer"
+      },
+      {
+        name: "Manipal Hospital, Dwarka, Delhi NCR",
+        details: "Appears in listings of hospitals with cervical cancer doctors; may be accessible depending on your location.",
+        link: "https://omega.credihealth.com/doctors/delhi-ncr/cervical-cancer"
+      },
+      {
+        name: "Fortis Memorial Research Institute, Gurugram (Optional / Nearby NCR)",
+        details: "Identified among good cancer-treatment hospitals in NCR region — may suit if you're willing to travel from Greater Noida.",
+        link: "https://gomedii.com/blogs/english/doctors-hospitals/best-hospitals-for-cancer-treatment-in-delhi-ncr/"
+      },
+      {
+        name: "Venkateshwar Hospitals, Delhi NCR (Optional / NCR)",
+        details: "They advertise gynecologic & surgical oncology care including treatments relevant to cervical cancer.",
+        link: "https://www.venkateshwarhospitals.com/oncology/cervical-cancer.php"
+      }
+    ];
+
+    // Display hospitals list
+    function displayHospitalsList() {
+      const hospitalsContainer = document.getElementById("hospitals-container");
+      const hospitalsList = document.getElementById("hospitals-list");
+      
+      if (!hospitalsContainer || !hospitalsList) {
+        showError("Cannot display hospital list. Please try again.");
+        return;
+      }
+
+      // Clear previous content
+      hospitalsContainer.innerHTML = "";
+
+      // Create hospital items
+      hospitals.forEach((hospital, index) => {
+        const hospitalItem = document.createElement("div");
+        hospitalItem.className = "hospital-item";
+        hospitalItem.innerHTML = `
+          <div class="hospital-name">${index + 1}. ${hospital.name}</div>
+          <div class="hospital-details">
+            <strong>Specialty:</strong> ${hospital.details}
+            ${hospital.link ? `<a href="${hospital.link}" target="_blank" class="hospital-link" rel="noopener noreferrer">Learn more →</a>` : ''}
+          </div>
+        `;
+        hospitalsContainer.appendChild(hospitalItem);
+      });
+
+      // Show hospitals list
+      hospitalsList.classList.add("active");
+      
+      // Scroll to hospitals list
+      setTimeout(() => {
+        hospitalsList.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 100);
+    }
+
+    // Search nearby hospitals on Google Maps
+    function searchNearbyHospitals() {
+      if (userLat && userLng) {
+        // Display hospital list
+        displayHospitalsList();
+        
+        // Also open Google Maps in a new tab
+        const url = `https://www.google.com/maps/search/hospitals+women+health+near+me/@${userLat},${userLng},15z`;
+        window.open(url, '_blank');
+      } else {
+        showError("Location not available. Please click 'Find Nearby HealthCare' first.");
+      }
+    }
+
+    // Event listeners
+    if (findCareBtn) {
+      findCareBtn.onclick = function(e) {
+        e.preventDefault();
+        getCurrentLocation();
+      };
+    }
+
+    if (viewOnMapBtn) {
+      viewOnMapBtn.onclick = function() {
+        viewOnMap();
+      };
+    }
+
+    if (searchNearbyBtn) {
+      searchNearbyBtn.onclick = function() {
+        searchNearbyHospitals();
+      };
+    }
+  }
+
+  // Authentication Functionality
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeAuth();
+  });
+
+  // API fetch wrapper with fallback to localhost:3001 when primary API is unavailable
+  const API_FALLBACK_ORIGINS = [`${location.protocol}//localhost:3001`, `${location.protocol}//localhost:3002`];
+  // Internal helper: fetch with timeout using AbortController
+  async function fetchWithTimeout(resource, options = {}, timeoutMs = 5000) {
+    const controller = new AbortController();
+    const signal = controller.signal;
+    const timer = setTimeout(() => controller.abort(), timeoutMs);
+    try {
+      const res = await fetch(resource, { ...options, signal });
+      clearTimeout(timer);
+      return res;
+    } catch (err) {
+      clearTimeout(timer);
+      throw err;
+    }
+  }
+
+  async function apiFetch(path, opts = {}, timeoutMs = 5000) {
+    // Try same-origin first with timeout
+    try {
+      const primary = path;
+      const res = await fetchWithTimeout(primary, opts, timeoutMs);
+      const ct = (res.headers.get('content-type') || '').toLowerCase();
+      if (ct.includes('text/html')) throw new Error('Received HTML from API — likely the editor static server');
+      return res;
+    } catch (err) {
+      // Fallback to explicit dev ports (try origins in the list)
+      let lastErr;
+      for (const origin of API_FALLBACK_ORIGINS) {
+        try {
+          const u = origin + (path.startsWith('/') ? path : '/' + path);
+          const res2 = await fetchWithTimeout(u, opts, timeoutMs);
+          try { showApiFallbackNotice(origin); } catch (e) { /* ignore */ }
+          return res2;
+        } catch (e) { lastErr = e; }
+      }
+      throw new Error('API request failed (primary and fallback): ' + (lastErr?.message || err.message || 'unknown'));
+    }
+  }
+
+  // Show a small non-intrusive notice when we had to fallback to local dev API
+  function showApiFallbackNotice(origin) {
+    let el = document.getElementById('apiFallbackNotice');
+    if (!el) {
+      el = document.createElement('div');
+      el.id = 'apiFallbackNotice';
+      el.setAttribute('role', 'status');
+      el.style.cssText = 'position:fixed;bottom:22px;left:22px;background:linear-gradient(90deg,#ffefef,#fff1f6);color:#880e4f;padding:10px 14px;border-radius:10px;box-shadow:0 6px 20px rgba(0,0,0,0.12);font-weight:600;z-index:10002;opacity:0;transform:translateY(8px);transition:all 260ms ease';
+      el.textContent = 'Using local dev API (' + (origin || 'http://localhost:3001') + ')';
+      document.body.appendChild(el);
+    }
+    // animate in
+    requestAnimationFrame(() => {
+      el.style.opacity = '1';
+      el.style.transform = 'translateY(0)';
+    });
+    // hide after 5s
+    clearTimeout(window.__apiFallbackNoticeTimeout);
+    window.__apiFallbackNoticeTimeout = setTimeout(() => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(8px)';
+    }, 5000);
+  }
+
+  // Profile now served by backend. Fetch profile on demand and show modal.
+  async function fetchProfileAndShowModal() {
+    const token = localStorage.getItem('cervicareToken');
+    if (!token) {
+      alert('You must be logged in to view your profile.');
+      return;
+    }
+    try {
+      const res = await apiFetch('/api/profile', {
+        headers: { 'Authorization': 'Bearer ' + token }
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || 'Failed to fetch profile');
+      }
+      const profile = await res.json();
+
+      // Build modal
+      let modal = document.getElementById('backendProfileModal');
+      if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'backendProfileModal';
+        modal.className = 'backend-profile-modal';
+        document.body.appendChild(modal);
+      }
+      modal.innerHTML = `
+        <div class="modal-backdrop" id="bp-backdrop"></div>
+        <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Profile">
+          <button id="bp-close" class="modal-close">×</button>
+          <h3>My Profile</h3>
+          <div><strong>Name:</strong> ${profile.name || profile.email || '—'}</div>
+          <div><strong>Email:</strong> ${profile.email || '—'}</div>
+          <div style="margin-top:8px;"><strong>Joined:</strong> ${profile.joinedAt ? new Date(profile.joinedAt).toLocaleString() : '—'}</div>
+          <div style="margin-top:12px;">
+            <button id="bp-edit" class="btn">Edit Profile</button>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('bp-close').onclick = () => modal.remove();
+      document.getElementById('bp-backdrop').onclick = () => modal.remove();
+      const editBtn = document.getElementById('bp-edit');
+      if (editBtn) editBtn.onclick = function() {
+        // Replace modal contents with an edit form
+        const formHtml = `
+          <div class="modal-backdrop" id="bp-backdrop"></div>
+          <div class="modal-panel" role="dialog" aria-modal="true" aria-label="Edit Profile">
+            <button id="bp-close" class="modal-close">×</button>
+            <h3>Edit Profile</h3>
+            <label style="display:block;margin-top:8px;">Name<br/><input id="bp-name" value="${(profile.name||'').replace(/"/g,'&quot;')}" /></label>
+            <div style="margin-top:12px;"><button id="bp-save" class="btn">Save</button> <button id="bp-cancel" class="btn btn-secondary">Cancel</button></div>
+          </div>
+        `;
+        modal.innerHTML = formHtml;
+        document.getElementById('bp-close').onclick = () => modal.remove();
+        document.getElementById('bp-backdrop').onclick = () => modal.remove();
+        document.getElementById('bp-cancel').onclick = () => fetchProfileAndShowModal();
+        document.getElementById('bp-save').onclick = async function() {
+          const nameVal = document.getElementById('bp-name').value.trim();
+          try {
+            const token = localStorage.getItem('cervicareToken');
+            const r = await apiFetch('/api/profile', { method: 'PUT', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token }, body: JSON.stringify({ name: nameVal }) });
+            if (!r.ok) { const t=await r.text(); throw new Error(t||'Save failed'); }
+            const updated = await r.json();
+            // show updated profile view
+            profile.name = updated.name;
+            fetchProfileAndShowModal();
+          } catch (err) {
+            alert('Unable to save profile: ' + (err.message || err));
+            console.error(err);
+          }
+        };
+      };
+
+    } catch (err) {
+      console.error(err);
+      alert('Unable to load profile: ' + (err.message || err));
+    }
+  }
+
+  function initializeAuth() {
+    const authModal = document.getElementById("authModal");
+    const loginBtnNav = document.getElementById("loginBtnNav");
+    const closeAuthModal = document.getElementById("closeAuthModal");
+    const loginTab = document.getElementById("loginTab");
+    const signupTab = document.getElementById("signupTab");
+    const loginForm = document.getElementById("loginForm");
+    const signupForm = document.getElementById("signupForm");
+    const authNavContainer = document.getElementById("auth-nav-container");
+
+    // Check if user is already logged in
+    checkLoginStatus();
+
+    // Open modal
+    if (loginBtnNav) {
+      loginBtnNav.onclick = function() {
+        openAuthModal();
+      };
+    }
+
+    // Close modal
+    if (closeAuthModal) {
+      closeAuthModal.onclick = function() {
+        closeAuthModalFunc();
+      };
+    }
+
+    // Close modal when clicking outside
+    if (authModal) {
+      authModal.onclick = function(e) {
+        if (e.target === authModal) {
+          closeAuthModalFunc();
+        }
+      };
+    }
+
+    // Tab switching
+    if (loginTab) {
+      loginTab.onclick = function() {
+        switchTab('login');
+      };
+    }
+
+    if (signupTab) {
+      signupTab.onclick = function() {
+        switchTab('signup');
+      };
+    }
+
+    // Login form submission
+    if (loginForm) {
+      loginForm.onsubmit = function(e) {
+        e.preventDefault();
+        handleLogin();
+      };
+    }
+
+    // Signup form submission
+    if (signupForm) {
+      signupForm.onsubmit = function(e) {
+        e.preventDefault();
+        handleSignup();
+      };
+    }
+
+    function openAuthModal() {
+      if (authModal) {
+        authModal.classList.add("active");
+        switchTab('login');
+      }
+    }
+
+    function closeAuthModalFunc() {
+      if (authModal) {
+        authModal.classList.remove("active");
+        // Clear forms
+        if (loginForm) loginForm.reset();
+        if (signupForm) signupForm.reset();
+        clearMessages();
+      }
+    }
+
+    function switchTab(tab) {
+      if (tab === 'login') {
+        loginTab.classList.add("active");
+        signupTab.classList.remove("active");
+        loginForm.classList.add("active");
+        signupForm.classList.remove("active");
+      } else {
+        signupTab.classList.add("active");
+        loginTab.classList.remove("active");
+        signupForm.classList.add("active");
+        loginForm.classList.remove("active");
+      }
+      clearMessages();
+    }
+
+    function clearMessages() {
+      const loginMessage = document.getElementById("loginMessage");
+      const signupMessage = document.getElementById("signupMessage");
+      if (loginMessage) {
+        loginMessage.className = "auth-message";
+        loginMessage.textContent = "";
+      }
+      if (signupMessage) {
+        signupMessage.className = "auth-message";
+        signupMessage.textContent = "";
+      }
+    }
+
+    function showMessage(elementId, message, type) {
+      const messageEl = document.getElementById(elementId);
+      if (messageEl) {
+        messageEl.textContent = message;
+        messageEl.className = `auth-message ${type}`;
+      }
+    }
+
+    function validateEmail(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+
+    async function handleSignup() {
+      const email = document.getElementById("signupEmail").value.trim();
+      const password = document.getElementById("signupPassword").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+
+      // Validation
+      if (!email || !password || !confirmPassword) { showMessage("signupMessage", "Please fill in all fields.", "error"); return; }
+      if (!validateEmail(email)) { showMessage("signupMessage", "Please enter a valid email address.", "error"); return; }
+      if (password.length < 6) { showMessage("signupMessage", "Password must be at least 6 characters long.", "error"); return; }
+      if (password !== confirmPassword) { showMessage("signupMessage", "Passwords do not match.", "error"); return; }
+
+      try {
+        const res = await apiFetch('/api/auth/signup', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Signup failed');
+        }
+        showMessage("signupMessage", "Account created successfully! You can now login.", "success");
+        setTimeout(() => { switchTab('login'); document.getElementById("loginEmail").value = email; }, 1200);
+      } catch (err) {
+        // Fallback: save user locally so signup/login can be tested without backend
+        console.warn('Signup API failed, falling back to localStorage', err);
+        try {
+          const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
+          if (users.find(u => u.email === email)) {
+            showMessage("signupMessage", "An account with this email already exists (local).", "error");
+            return;
+          }
+          users.push({ email: email, password: password, createdAt: new Date().toISOString() });
+          localStorage.setItem('cervicareUsers', JSON.stringify(users));
+          showMessage("signupMessage", "Signed up locally (offline). You can now login.", "success");
+          setTimeout(() => { switchTab('login'); document.getElementById("loginEmail").value = email; }, 900);
+        } catch (le) {
+          console.error('Local signup failed', le);
+          showMessage("signupMessage", "Signup error: " + (err.message || err), "error");
+        }
+      }
+    }
+
+    async function handleLogin() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const password = document.getElementById("loginPassword").value;
+
+      if (!email || !password) { showMessage("loginMessage", "Please enter both email and password.", "error"); return; }
+      if (!validateEmail(email)) { showMessage("loginMessage", "Please enter a valid email address.", "error"); return; }
+
+      try {
+        const res = await apiFetch('/api/auth/login', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, password })
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Login failed');
+        }
+        const data = await res.json();
+        // Expecting { token, user }
+        if (data.token) {
+          localStorage.setItem('cervicareToken', data.token);
+          if (data.user && data.user.email) localStorage.setItem('cervicareEmail', data.user.email);
+        }
+        showMessage("loginMessage", "Login successful!", "success");
+        setTimeout(() => { closeAuthModalFunc(); checkLoginStatus(); }, 800);
+      } catch (err) {
+        // Fallback: try localStorage users if backend isn't reachable
+        console.warn('Login API failed, attempting local fallback', err);
+        try {
+          const users = JSON.parse(localStorage.getItem('cervicareUsers') || '[]');
+          const user = users.find(u => u.email === email && u.password === password);
+          if (!user) {
+            showMessage("loginMessage", "Invalid email or password (offline).", "error");
+            return;
+          }
+          // create a local token so checkLoginStatus can treat user as logged in
+          const localToken = 'local-' + Date.now();
+          localStorage.setItem('cervicareToken', localToken);
+          localStorage.setItem('cervicareEmail', email);
+          showMessage("loginMessage", "Login successful (offline).", "success");
+          setTimeout(() => { closeAuthModalFunc(); checkLoginStatus(); }, 600);
+        } catch (le) {
+          console.error('Local login failed', le);
+          showMessage("loginMessage", "Login error: " + (err.message || err), "error");
+        }
+      }
+    }
+
+    function checkLoginStatus() {
+      const token = localStorage.getItem('cervicareToken');
+      const email = localStorage.getItem('cervicareEmail');
+
+      if (token && authNavContainer) {
+        const initials = (email && email.charAt(0).toUpperCase()) || 'U';
+        authNavContainer.innerHTML = `
+          <div class="user-info-nav" style="position:relative;">
+            <div id="profileAvatar" class="profile-avatar" title="${email}">${initials}</div>
+            <div id="profileDropdown" class="profile-dropdown" aria-hidden="true">
+              <div class="profile-dropdown-item" id="viewProfileBtn">View Profile</div>
+              <div class="profile-dropdown-item" id="logoutBtn">Logout</div>
+            </div>
+          </div>
+        `;
+
+        const avatarEl = document.getElementById('profileAvatar');
+        const dropdownEl = document.getElementById('profileDropdown');
+        const viewProfileBtn = document.getElementById('viewProfileBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+
+        if (avatarEl && dropdownEl) avatarEl.onclick = function(e) { e.stopPropagation(); dropdownEl.classList.toggle('active'); };
+
+        if (viewProfileBtn) viewProfileBtn.onclick = function() { if (dropdownEl) dropdownEl.classList.remove('active'); fetchProfileAndShowModal(); };
+
+        if (logoutBtn) logoutBtn.onclick = function() { localStorage.removeItem('cervicareToken'); localStorage.removeItem('cervicareEmail'); checkLoginStatus(); };
+
+        if (!window.__profileDropdownListenerAdded) {
+          document.addEventListener('click', function(ev) {
+            const d = document.getElementById('profileDropdown');
+            const a = document.getElementById('profileAvatar');
+            if (d && a && !d.contains(ev.target) && !a.contains(ev.target)) d.classList.remove('active');
+          });
+          window.__profileDropdownListenerAdded = true;
+        }
+      } else {
+        if (authNavContainer) {
+          authNavContainer.innerHTML = '<button class="login-btn-nav" id="loginBtnNav">Login</button>';
+          const newLoginBtn = document.getElementById("loginBtnNav");
+          if (newLoginBtn) newLoginBtn.onclick = function() { openAuthModal(); };
+        }
+      }
+    }
+
+    // Make checkLoginStatus available globally
+    window.checkLoginStatus = checkLoginStatus;
+  }
+
+  // Hide or show profile option in options menu based on login state
+  (function(){
+    const orig = window.checkLoginStatus;
+    window.checkLoginStatus = function() {
+      if (typeof orig === 'function') orig();
+      const token = localStorage.getItem('cervicareToken');
+      const opt = document.getElementById('optProfile');
+      if (opt) opt.style.display = token ? '' : 'none';
+    };
+  })();
+
+  // ---------------- HPV/Screening Reminder logic ----------------
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeHPVNotifications();
+  });
+
+  function initializeHPVNotifications() {
+    const enableBtn = document.getElementById("enableNotificationsBtn");
+    const setBtn = document.getElementById("setHPVReminder");
+    const hpvDate = document.getElementById("hpvDate");
+    const screeningType = document.getElementById("screeningType");
+    const hpvMessage = document.getElementById("hpvMessage");
+
+    loadHPVRemindersUI();
+    // periodic check every minute for due reminders (works while page is open)
+    setInterval(checkAndNotifyHPVReminders, 60 * 1000);
+    // also run immediately on load
+    setTimeout(checkAndNotifyHPVReminders, 1000);
+
+    if (enableBtn) {
+      enableBtn.onclick = function () {
+        requestNotificationPermission().then(granted => {
+          if (granted) {
+            hpvMessage.textContent = "Browser notifications enabled.";
+            hpvMessage.style.color = "#155724";
+          } else {
+            hpvMessage.textContent = "Notifications blocked. You can still save reminders locally.";
+            hpvMessage.style.color = "#721c24";
+          }
+        });
+      };
+    }
+
+    if (setBtn) {
+      setBtn.onclick = function () {
+        const dateVal = hpvDate.value;
+        const typeVal = screeningType.value;
+        if (!dateVal) {
+          showHPVMessage("Please select a date.", "error");
+          return;
+        }
+        const reminder = {
+          id: 'hpv_' + Date.now(),
+          date: new Date(dateVal).toISOString(),
+          type: typeVal,
+          notified: false,
+          createdAt: new Date().toISOString()
+        };
+        const reminders = JSON.parse(localStorage.getItem('cervicareHPVReminders') || '[]');
+        reminders.push(reminder);
+        localStorage.setItem('cervicareHPVReminders', JSON.stringify(reminders));
+        showHPVMessage("Reminder saved.", "success");
+        loadHPVRemindersUI();
+      };
+    }
+  }
+
+  function requestNotificationPermission() {
+    return new Promise((resolve) => {
+      if (!("Notification" in window)) {
+        resolve(false);
+        return;
+      }
+      if (Notification.permission === "granted") {
+        resolve(true);
+        return;
+      }
+      if (Notification.permission !== "denied") {
+        Notification.requestPermission().then(permission => {
+          resolve(permission === "granted");
+        });
+      } else {
+        resolve(false);
+      }
+    });
+  }
+
+  function showHPVMessage(msg, type) {
+    const el = document.getElementById("hpvMessage");
+    if (!el) return;
+    el.textContent = msg;
+    el.style.color = type === "success" ? "#155724" : "#721c24";
+  }
+
+  function loadHPVRemindersUI() {
+    const listEl = document.getElementById("hpvRemindersList");
+    if (!listEl) return;
+    const reminders = JSON.parse(localStorage.getItem('cervicareHPVReminders') || '[]');
+    if (reminders.length === 0) {
+      listEl.innerHTML = "<em>No reminders set.</em>";
+      return;
+    }
+    listEl.innerHTML = "";
+    reminders.sort((a,b)=> new Date(a.date) - new Date(b.date));
+    reminders.forEach(r => {
+      const row = document.createElement("div");
+      row.style.padding = "8px";
+      row.style.border = "1px solid #eee";
+      row.style.borderRadius = "6px";
+      row.style.marginBottom = "8px";
+      const dateStr = new Date(r.date).toLocaleString();
+      row.innerHTML = `<strong>${r.type.toUpperCase()}</strong> — ${dateStr} ${r.notified ? '<span style="color:#666;margin-left:8px;">(notified)</span>' : ''} <button style="float:right;" data-id="${r.id}" class="remove-hpv-btn">Remove</button>`;
+      listEl.appendChild(row);
+    });
+    // attach removal handlers
+    Array.from(document.getElementsByClassName("remove-hpv-btn")).forEach(btn => {
+      btn.onclick = function() {
+        const id = this.getAttribute("data-id");
+        let reminders = JSON.parse(localStorage.getItem('cervicareHPVReminders') || '[]');
+        reminders = reminders.filter(r => r.id !== id);
+        localStorage.setItem('cervicareHPVReminders', JSON.stringify(reminders));
+        loadHPVRemindersUI();
+      };
+    });
+  }
+
+  function checkAndNotifyHPVReminders() {
+    const reminders = JSON.parse(localStorage.getItem('cervicareHPVReminders') || '[]');
+    if (!reminders || reminders.length === 0) return;
+    const now = Date.now();
+    let changed = false;
+    reminders.forEach(r => {
+      if (r.notified) return;
+      const remindAt = new Date(r.date).getTime();
+      // notify if due within the next minute or overdue
+      if (remindAt <= now + 60*1000) {
+        // show notification
+        const title = `Reminder: ${r.type.toUpperCase()}`;
+        const body = `Your scheduled ${r.type.toUpperCase()} is on ${new Date(r.date).toLocaleString()}`;
+        if (Notification && Notification.permission === "granted") {
+          try {
+            new Notification(title, { body: body, tag: r.id });
+          } catch (e) {
+            alert(body);
+          }
+        } else {
+          // fallback
+          alert(body);
+        }
+        r.notified = true;
+        changed = true;
+      }
+    });
+    if (changed) {
+      localStorage.setItem('cervicareHPVReminders', JSON.stringify(reminders));
+      loadHPVRemindersUI();
+    }
+  }
+  // ---------------- end HPV/Screening Reminder logic ----------------
+
+  // Vaccination reminder simple local save (existing button)
+  document.addEventListener("DOMContentLoaded", function() {
+    const setReminderBtn = document.getElementById("setReminder");
+    const vaccineDateInput = document.getElementById("vaccineDate");
+    const reminderMessage = document.getElementById("reminderMessage");
+
+    if (setReminderBtn) {
+      setReminderBtn.onclick = function() {
+        const dateVal = vaccineDateInput.value;
+        if (!dateVal) {
+          reminderMessage.textContent = "Please select a date.";
+          reminderMessage.style.color = "#721c24";
+          return;
+        }
+        const reminders = JSON.parse(localStorage.getItem('cervicareVaccineReminders') || '[]');
+        reminders.push({ id: 'vax_' + Date.now(), date: new Date(dateVal).toISOString(), createdAt: new Date().toISOString() });
+        localStorage.setItem('cervicareVaccineReminders', JSON.stringify(reminders));
+        reminderMessage.textContent = "Vaccination reminder saved.";
+        reminderMessage.style.color = "#155724";
+        setTimeout(() => { reminderMessage.textContent = ""; }, 3000);
+      };
+    }
+  });
+</script>
+
+
+<script>
+  // ============================================ ADVANCED ANIMATIONS & INTERACTIONS ============================================
+
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  // Observe all sections
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('section, .hospital-item').forEach(el => {
+      observer.observe(el);
+    });
+  });
+
+  // Enhanced button click feedback
+  document.querySelectorAll('.btn, #findCareBtn, .login-btn-nav').forEach(btn => {
+    btn.addEventListener('click', function() {
+      this.style.animation = 'pulse 0.5s ease-in-out';
+      setTimeout(() => {
+        this.style.animation = '';
+      }, 500);
+    });
+  });
+
+  // Smooth scroll for navigation links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+
+  // Page load animation
+  window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+    console.log('%c🎉 CerviCare loaded successfully!', 'color: #c2185b; font-size: 14px; font-weight: bold;');
+  });
+
+  // Scroll progress indicator
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / docHeight) * 100;
+    
+    // Visual feedback for sections
+    document.querySelectorAll('section').forEach(section => {
+      const rect = section.getBoundingClientRect();
+      if (rect.top < window.innerHeight && rect.bottom > 0) {
+        section.style.opacity = '1';
+      }
+    });
+  });
+
+  // Enhanced input focus animations
+  document.querySelectorAll('input, select, textarea').forEach(input => {
+    input.addEventListener('focus', function() {
+      this.style.transform = 'scale(1.02)';
+      this.style.boxShadow = '0 0 0 3px rgba(194, 24, 91, 0.1)';
+    });
+
+    input.addEventListener('blur', function() {
+      this.style.transform = 'scale(1)';
+      this.style.boxShadow = 'none';
+    });
+  });
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', (e) => {
+    // Alt + C to toggle chatbot
+    if (e.altKey && e.key === 'c') {
+      const chatbotBtn = document.getElementById('chatbot-btn');
+      if (chatbotBtn) chatbotBtn.click();
+    }
+    // Alt + L to toggle login
+    if (e.altKey && e.key === 'l') {
+      const loginBtn = document.getElementById('loginBtnNav');
+      if (loginBtn) loginBtn.click();
+    }
+  });
+
+  // Real-time form validation
+  const emailInputs = document.querySelectorAll('input[type="email"]');
+  emailInputs.forEach(input => {
+    input.addEventListener('blur', function() {
+      const isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.value);
+      if (this.value && !isValid) {
+        this.style.borderColor = '#f44336';
+        this.style.boxShadow = '0 0 0 3px rgba(244, 67, 54, 0.1)';
+      } else {
+        this.style.borderColor = '#e0e0e0';
+      }
+    });
+  });
+
+  // Dynamic notification system
+  function showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 16px 20px;
+      background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+      color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 10001;
+      animation: slideInRight 0.3s ease-out;
+      font-weight: 500;
+      max-width: 300px;
+    `;
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.animation = 'slideInRight 0.3s ease-out reverse';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // Export notification function
+  window.showNotification = showNotification;
+
+  // Performance optimization - lazy load images
+  if ('IntersectionObserver' in window) {
+    const imageObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          img.src = img.dataset.src || img.src;
+          imageObserver.unobserve(img);
+        }
+      });
+    });
+
+    document.querySelectorAll('img[data-src]').forEach(img => {
+      imageObserver.observe(img);
+    });
+  }
+
+  // Add ripple effect to buttons
+  document.querySelectorAll('.btn, #findCareBtn').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        background: rgba(255, 255, 255, 0.5);
+        border-radius: 50%;
+        left: ${x}px;
+        top: ${y}px;
+        pointer-events: none;
+        animation: ripple 0.6s ease-out;
+      `;
+
+      this.style.position = 'relative';
+      this.style.overflow = 'hidden';
+      this.appendChild(ripple);
+
+      setTimeout(() => ripple.remove(), 600);
+    });
+  });
+
+  @keyframes ripple {
+    from {
+      transform: scale(0);
+      opacity: 1;
+    }
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+
+  // Dark mode toggle (optional future enhancement)
+  function initDarkMode() {
+    const isDark = localStorage.getItem('darkMode') === 'true';
+    if (isDark) {
+      document.body.style.filter = 'invert(1) hue-rotate(180deg)';
+    }
+  }
+
+  // Theme persistence
+  document.addEventListener('DOMContentLoaded', initDarkMode);
+
+  console.log('%c✨ Advanced CSS & JS Enhancements Loaded!', 'color: #c2185b; font-size: 16px; font-weight: bold;');
+</script>
+  <!-- Contact form handling (client-side save to localStorage) -->
+  <script>
+    (function() {
+      const form = document.getElementById('contactForm');
+      const statusEl = document.getElementById('contactFormStatus');
+      const resetBtn = document.getElementById('contactReset');
+
+      function showFormStatus(message, type='info') {
+        if (window.showNotification) {
+          window.showNotification(message, type === 'success' ? 'success' : type === 'error' ? 'error' : 'info');
+        }
+        if (statusEl) {
+          statusEl.textContent = message;
+          statusEl.style.color = type === 'success' ? '#155724' : type === 'error' ? '#721c24' : '#333';
+          setTimeout(() => { statusEl.textContent = ''; }, 3500);
+        }
+      }
+
+      function validateEmail(email) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+      }
+
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+
+          const name = document.getElementById('contactName').value.trim();
+          const email = document.getElementById('contactEmail').value.trim();
+          const subject = document.getElementById('contactSubject').value.trim();
+          const message = document.getElementById('contactMessage').value.trim();
+
+          if (!name || !email || !message) {
+            showFormStatus('Please complete name, email and message.', 'error');
+            return;
+          }
+          if (!validateEmail(email)) {
+            showFormStatus('Please enter a valid email address.', 'error');
+            return;
+          }
+
+          // Save locally
+          try {
+            const saved = JSON.parse(localStorage.getItem('cervicareContacts') || '[]');
+            const entry = { id: 'msg_' + Date.now(), name, email, subject, message, createdAt: new Date().toISOString() };
+            saved.push(entry);
+            localStorage.setItem('cervicareContacts', JSON.stringify(saved));
+          } catch (err) {
+            console.warn('Could not save contact locally', err);
+          }
+
+          // Submit to Formspree via fetch (uses form action attribute)
+          const action = form.getAttribute('action') || 'https://formspree.io/f/xgvgpzgz';
+          const fd = new FormData();
+          fd.append('name', name);
+          fd.append('_replyto', email);
+          fd.append('subject', subject);
+          fd.append('message', message);
+
+          fetch(action, {
+            method: 'POST',
+            headers: { 'Accept': 'application/json' },
+            body: fd
+          }).then(response => {
+            if (response.ok) {
+              showFormStatus('Message sent. Thank you — we will reply soon.', 'success');
+              form.reset();
+            } else {
+              response.json().then(data => {
+                showFormStatus((data && data.error) ? data.error : 'Submission failed. Please try again later.', 'error');
+              }).catch(() => {
+                showFormStatus('Submission failed. Please try again later.', 'error');
+              });
+            }
+          }).catch(() => {
+            showFormStatus('Network error sending message. Please try again later.', 'error');
+          });
+        });
+      }
+
+      if (resetBtn) {
+        resetBtn.addEventListener('click', function() { if (form) form.reset(); });
+      }
+
+      // Developer helper to read saved messages
+      window.getCerviCareMessages = function() {
+        return JSON.parse(localStorage.getItem('cervicareContacts') || '[]');
+      };
+    })();
+  </script>
+  <!-- AOS (Animate On Scroll) - JS -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Hamburger/mobile menu behavior
+    (function(){
+      const btn = document.getElementById('hamburgerBtn');
+      const menu = document.getElementById('mobileMenu');
+      const backdrop = document.getElementById('mobileBackdrop');
+      const mobileAuth = document.getElementById('mobile-auth-container');
+      const closeBtn = document.getElementById('mobileMenuClose');
+      const authNav = document.getElementById('auth-nav-container');
+
+      function syncAuth() {
+        if (!mobileAuth || !authNav) return;
+        mobileAuth.innerHTML = authNav.innerHTML;
+        // wire mobile login button
+        const mLogin = document.getElementById('mobileLoginBtn');
+        const navLogin = document.getElementById('loginBtnNav');
+        if (mLogin && navLogin) mLogin.onclick = navLogin.onclick;
+      }
+
+      function openMenu(){
+        if (!menu || !btn || !backdrop) return;
+        menu.classList.add('active'); menu.setAttribute('aria-hidden','false'); btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); backdrop.hidden = false; setTimeout(()=>backdrop.classList.add('show'),20);
+        // trap scroll
+        document.documentElement.style.overflow = 'hidden';
+      }
+
+      function closeMenu(){
+        if (!menu || !btn || !backdrop) return;
+        menu.classList.remove('active'); menu.setAttribute('aria-hidden','true'); btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); backdrop.classList.remove('show'); setTimeout(()=>backdrop.hidden=true,300);
+        document.documentElement.style.overflow = '';
+      }
+
+      if (btn) btn.addEventListener('click', function(e){ e.stopPropagation(); syncAuth(); const isOpen = btn.classList.contains('open'); if (isOpen) closeMenu(); else openMenu(); });
+      if (backdrop) backdrop.addEventListener('click', closeMenu);
+      if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+      // close when clicking a link inside mobile menu
+      if (menu) menu.addEventListener('click', function(e){ const a = e.target.closest('a'); if (a) closeMenu(); });
+
+      // Close on escape
+      document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeMenu(); });
+
+      // Sync auth into mobile menu on load
+      document.addEventListener('DOMContentLoaded', syncAuth);
+      // Accordion toggle behavior
+      document.addEventListener('DOMContentLoaded', function () {
+        const accordions = document.querySelectorAll('.accordion .accordion-btn');
+        accordions.forEach(btn => {
+          const panel = btn.nextElementSibling;
+          btn.addEventListener('click', function (e) {
+            const expanded = btn.getAttribute('aria-expanded') === 'true';
+            // If you want only one open, close others:
+            accordions.forEach(b => { if (b !== btn) { b.setAttribute('aria-expanded', 'false'); b.nextElementSibling?.classList.remove('open'); b.nextElementSibling?.setAttribute('hidden',''); } });
+            btn.setAttribute('aria-expanded', String(!expanded));
+            if (!expanded) { panel.classList.add('open'); panel.removeAttribute('hidden'); } else { panel.classList.remove('open'); panel.setAttribute('hidden',''); }
+          });
+          // keyboard support
+          btn.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); } });
+        });
+      });
+      // Also sync whenever auth changes by exposing a hook
+      window.syncCerviCareAuth = syncAuth;
+    })();
+  </script>
+    <script>
+      // Options (three-dot) dropdown behavior
+      (function(){
+        document.addEventListener('DOMContentLoaded', function(){
+          const btn = document.getElementById('optionsBtn');
+          const menu = document.getElementById('optionsMenu');
+          if (!btn || !menu) return;
+          function openOpt(){ btn.classList.add('open'); btn.setAttribute('aria-expanded','true'); menu.classList.add('open'); menu.setAttribute('aria-hidden','false'); }
+          function closeOpt(){ btn.classList.remove('open'); btn.setAttribute('aria-expanded','false'); menu.classList.remove('open'); menu.setAttribute('aria-hidden','true'); }
+          btn.addEventListener('click', function(e){ e.stopPropagation(); if (btn.classList.contains('open')) closeOpt(); else openOpt(); });
+          menu.addEventListener('click', function(e){ if (e.target.closest('a')) closeOpt(); });
+          document.addEventListener('click', function(e){ if (!e.target.closest || !e.target.closest('.options-wrap')) closeOpt(); });
+          document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeOpt(); });
+          // Wire profile link to open profile modal if present
+          const pLink = document.getElementById('optProfileLink');
+          if (pLink) {
+            pLink.addEventListener('click', function(e){
+              e.preventDefault();
+              // close menu
+              closeOpt();
+              // call existing profile modal fetcher
+              if (typeof fetchProfileAndShowModal === 'function') fetchProfileAndShowModal();
+              else console.warn('fetchProfileAndShowModal not found');
+            });
+          }
+        });
+      })();
+    </script>
+  <script>
+    // Auto-attach AOS attributes to sections and repeated items
+    document.addEventListener('DOMContentLoaded', function () {
+      // Attach AOS to each section with incremental delays
+      const sections = Array.from(document.querySelectorAll('section'));
+      sections.forEach((sec, i) => {
+        // if user already set an attribute, don't override it
+        if (!sec.hasAttribute('data-aos')) {
+          sec.setAttribute('data-aos', 'fade-up');
+        }
+        if (!sec.hasAttribute('data-aos-delay')) {
+          // stagger delay in 80ms steps, clamp to 800ms
+          const delay = Math.min(800, i * 80);
+          sec.setAttribute('data-aos-delay', String(delay));
+        }
+        if (!sec.hasAttribute('data-aos-duration')) {
+          sec.setAttribute('data-aos-duration', '700');
+        }
+      });
+
+      // Attach AOS to hospital items and reminder cards
+      document.querySelectorAll('.hospital-item, #hpvRemindersList > div, .hygiene-list li').forEach((el, idx) => {
+        if (!el.hasAttribute('data-aos')) el.setAttribute('data-aos', 'fade-up');
+        if (!el.hasAttribute('data-aos-delay')) el.setAttribute('data-aos-delay', String((idx % 6) * 80));
+        if (!el.hasAttribute('data-aos-duration')) el.setAttribute('data-aos-duration', '600');
+      });
+
+      // Initialize AOS
+      if (window.AOS) {
+        AOS.init({
+          duration: 700,
+          easing: 'ease-out-cubic',
+          once: true,        // animate only once
+          mirror: false,     // do not animate elements out while scrolling past
+          offset: 120
+        });
+      }
+    });
+  </script>
+</body>
+</html>
+ al-scale=1.0">
   <title>CerviCare - Cervical Cancer Awareness</title>
     <!-- AOS (Animate On Scroll) - CSS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
